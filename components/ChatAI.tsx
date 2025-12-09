@@ -177,7 +177,7 @@ export const ChatAI: React.FC = () => {
               </div>
               <div className="text-center mt-2">
                 <p className="text-[10px] text-mangka-primary/40 font-sans flex items-center justify-center gap-1">
-                  <Sparkles size={10} /> Powered by Gemini AI
+                   Respon Mang AI Mungkin Tidak Selalu Benar!!
                 </p>
               </div>
             </div>
