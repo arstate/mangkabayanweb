@@ -52,7 +52,7 @@ export const ChatAI: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      const ai = new GoogleGenAI({ apiKey: "AIzaSyDixFiE3KbwMdqC6V3qvMzO9gkoUDdQDrI" });
       const chat = ai.chats.create({
         model: 'gemini-2.5-flash-lite-latest',
         config: {
@@ -212,3 +212,4 @@ export const ChatAI: React.FC = () => {
     </div>
   );
 };
+    
