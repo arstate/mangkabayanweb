@@ -72,31 +72,28 @@ export const Navbar: React.FC = () => {
             <img 
               src="https://lh3.googleusercontent.com/drive-storage/AJQWtBNz62XJW_8Atikr1z2r7aTv6ACDAHD8infsA7NfmxhtcRrYgQFlS8l07pbE-ggQGhw671u-D9fLWJob3pzAzHx_byIuwIMxm-nO=w800" 
               alt="Mangkabayan Surabaya" 
-              // Added brightness-0 invert to make the logo white on the dark background
-              className="h-12 md:h-14 w-auto object-contain brightness-0 invert"
+              className="h-12 md:h-14 w-auto object-contain"
             />
           </Link>
 
           {/* Desktop Menu */}
           <nav className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => {
-              // Custom logic: If on homepage, use anchor tag behavior manually to avoid reload
               if (isHomePage && link.isHash) {
                  return (
                    <a
                      key={link.name}
-                     href={link.href.replace('/', '')} // becomes #home
+                     href={link.href.replace('/', '')} 
                      className="text-white hover:text-mangka-secondary font-medium text-sm transition-colors duration-200 cursor-pointer"
                    >
                      {link.name}
                    </a>
                  )
               }
-              // If on other page, use Link to go to /#hash
               return (
                 <Link 
                   key={link.name} 
-                  to={link.href} // becomes /#home
+                  to={link.href} 
                   className="text-white hover:text-mangka-secondary font-medium text-sm transition-colors duration-200"
                 >
                   {link.name}
@@ -146,7 +143,6 @@ export const Navbar: React.FC = () => {
           >
             <div className="bg-mangka-primary/95 backdrop-blur-xl border border-white/20 rounded-[32px] shadow-xl p-6 flex flex-col gap-4 items-center">
               {navLinks.map((link) => {
-                 // simplified mobile logic
                  if (isHomePage && link.isHash) {
                     return (
                       <a 
