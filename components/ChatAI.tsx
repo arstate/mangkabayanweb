@@ -1,7 +1,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, X, Send, Sparkles, Bot } from 'lucide-react';
+import { MessageCircle, X, Send, Sparkles } from 'lucide-react';
 import { GoogleGenAI } from "@google/genai";
 
 // Konfigurasi System Prompt berdasarkan Data PDF
@@ -102,8 +102,12 @@ export const ChatAI: React.FC = () => {
             {/* Header Glass */}
             <div className="flex items-center justify-between p-4 bg-gradient-to-r from-mangka-primary/10 to-mangka-secondary/10 border-b border-white/30">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-mangka-secondary to-orange-300 flex items-center justify-center shadow-inner">
-                   <Bot className="text-white w-6 h-6" />
+                <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-inner overflow-hidden border border-white/50">
+                   <img 
+                      src="https://lh3.googleusercontent.com/drive-storage/AJQWtBM9-6sEavzc_FRWJ6rItt5I4nhGD6PMIxUuA0KWq4XBUaq2eBoNn8x-O6j4d69_1ZE5JqzHJo3Cw8FTcse-V_5QFD7CoulGq5pX=w200" 
+                      alt="Logo Mangkabayan"
+                      className="w-full h-full object-cover"
+                   />
                 </div>
                 <div>
                   <h3 className="font-serif font-bold text-mangka-primary">Mang Asisten</h3>
