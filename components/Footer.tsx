@@ -12,11 +12,12 @@ export const Footer: React.FC = () => {
           <div className="space-y-6">
             <div>
               <img 
-                src="https://lh3.googleusercontent.com/drive-storage/AJQWtBNcQA8v_mAc4qdd_SM028mNgL6CncLKUiFKSuFQ2_BRTYo1Lpls6l7YDxAw_iKvyi3_Xksgbx8xMZsxet7VSpOFlmixaJav_yq7Tw=w500" 
-                alt="Mangkabayan Surabaya Logo" 
-                className="w-48 h-auto mb-2"
-                width="500"
+                src="https://lh3.googleusercontent.com/drive-storage/AJQWtBOdE7aCe1oFhR3woupMRqe-YHUcOIw0cQY-1eG7m6WgRWRVBNjT2CO5ZZWvckXrmuIh0Ve36XSietbiFmFFh43EwVUqDudpWeFJ=w800" 
+                alt="LOGO MANGKABAYAN NEW.png" 
+                width="800"
                 loading="lazy"
+                className="w-48 h-auto mb-2"
+                style={{ maxWidth: '100%', height: 'auto' }}
               />
             </div>
             <p className="text-white/70 font-sans leading-relaxed text-sm">
