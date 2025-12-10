@@ -3,6 +3,7 @@ import React from 'react';
 import { HashRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
+import { PromoSlider } from './components/PromoSlider';
 import { Story } from './components/Story';
 import { Menu } from './components/Menu';
 import { Facilities } from './components/Facilities';
@@ -44,6 +45,7 @@ const Home = () => {
   return (
     <>
       <Hero />
+      <PromoSlider />
       <Story />
       <Menu />
       <Facilities />
