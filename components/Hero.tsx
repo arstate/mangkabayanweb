@@ -12,22 +12,27 @@ export const Hero: React.FC = () => {
       <div className="absolute top-20 left-10 w-64 h-64 bg-mangka-secondary/10 rounded-full blur-3xl -z-10" />
       <div className="absolute bottom-20 right-20 w-80 h-80 bg-mangka-primary/5 rounded-full blur-3xl -z-10" />
 
-      {/* Decorative Pattern (Desktop Only) */}
-      <div className="hidden lg:block absolute left-0 top-1/2 -translate-y-1/2 z-0 pointer-events-none select-none -ml-48 xl:-ml-32 transition-all duration-700">
-        <img 
-          src="https://lh3.googleusercontent.com/drive-storage/AJQWtBN9ip0Nw2b_lz9ITEoIcmXxYxzd5jyC21N86oLKGUDs8m6qXfXHcnfJKnDv6finMPr0QczaOBgI3tOm_ZJcwDvkJqhhl9ErZ2dt4g=w800" 
-          alt="Pattern Mangkabayan" 
-          className="w-[500px] rotate-90 opacity-100"
-          loading="lazy"
-        />
-      </div>
-      
-
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
           
           {/* Text Content */}
           <div className="lg:w-1/2 space-y-8 relative z-10">
+            
+            {/* Decorative Pattern (Smart Positioning) */}
+            {/* 
+                right-full: Menempel di sisi kiri container teks.
+                translate-x-1/2: Menggeser 50% gambar ke KANAN (masuk ke bawah teks) agar tidak terpotong layar laptop.
+                xl:translate-x-1/4: Pada layar besar, geser sedikit ke KIRI agar lebih mengisi margin.
+            */}
+            <div className="hidden lg:block absolute right-full top-1/2 -translate-y-1/2 translate-x-1/2 xl:translate-x-1/4 w-[500px] pointer-events-none select-none -z-10 transition-all duration-700">
+              <img 
+                src="https://lh3.googleusercontent.com/drive-storage/AJQWtBNMYhg1J2BGH1m77-0B1wNocd0TZsG7AVZ76U1MpcHMTfq9E6H-HzsiFtKWQDSjBaxXM_3nmID9g-9irVRi7LZJKrPn8oHCsa4f=w800" 
+                alt="Pattern Mangkabayan" 
+                className="w-full rotate-90 opacity-100"
+                loading="lazy"
+              />
+            </div>
+
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
