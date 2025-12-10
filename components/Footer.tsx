@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { MapPin, Phone, Instagram, Mail } from 'lucide-react';
 
@@ -10,8 +11,13 @@ export const Footer: React.FC = () => {
           {/* Brand */}
           <div className="space-y-6">
             <div>
-              <h2 className="font-serif text-3xl font-bold text-white mb-1">Mangkabayan</h2>
-              <p className="text-mangka-secondary text-sm font-bold tracking-widest uppercase">Surabaya</p>
+              <img 
+                src="https://lh3.googleusercontent.com/drive-storage/AJQWtBNcQA8v_mAc4qdd_SM028mNgL6CncLKUiFKSuFQ2_BRTYo1Lpls6l7YDxAw_iKvyi3_Xksgbx8xMZsxet7VSpOFlmixaJav_yq7Tw=w500" 
+                alt="Mangkabayan Surabaya Logo" 
+                className="w-48 h-auto mb-2"
+                width="500"
+                loading="lazy"
+              />
             </div>
             <p className="text-white/70 font-sans leading-relaxed text-sm">
               Restoran keluarga dengan cita rasa khas Sunda dan hidangan laut yang otentik.
