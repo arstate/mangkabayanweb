@@ -16,13 +16,28 @@ const Home = () => {
   const location = useLocation();
   
   React.useEffect(() => {
+    // Jika ada hash di URL (misal: /#menu)
     if (location.hash) {
-      const element = document.getElementById(location.hash.substring(1));
-      if (element) {
-        setTimeout(() => {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
-      }
+      const targetId = location.hash.substring(1);
+      
+      // Beri sedikit jeda agar DOM ter-render sepenuhnya sebelum scroll
+      setTimeout(() => {
+        const element = document.getElementById(targetId);
+        if (element) {
+          // Kita gunakan perhitungan manual agar scroll tidak tertutup navbar (offset)
+          const headerOffset = 100;
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      }, 500); // 500ms delay untuk memastikan halaman siap
+    } else {
+      // Jika kembali ke Home tanpa hash, scroll ke paling atas
+      window.scrollTo(0, 0);
     }
   }, [location]);
 

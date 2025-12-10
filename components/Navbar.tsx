@@ -54,8 +54,10 @@ export const Navbar: React.FC = () => {
           window.history.pushState(null, '', href);
         }
       } else {
-        // Jika di halaman lain, biarkan Link bekerja (pindah ke /#id), App.tsx yang akan handle scroll
-        return; 
+        // Jika di halaman lain (misal /menu), paksa navigasi menggunakan router
+        // App.tsx akan menangani scrolling setelah halaman Home dimuat
+        e.preventDefault();
+        navigate(href);
       }
     }
   };
@@ -79,15 +81,17 @@ export const Navbar: React.FC = () => {
     >
       {/* Wrapper untuk mengatur padding container luar */}
       <div className={`transition-all duration-500 ease-in-out ${
-        isScrolled ? 'px-4 md:px-6 py-2' : 'px-0 py-0'
+        isScrolled 
+          ? 'px-4 md:px-6 pt-6 pb-2' // Floating: turun sedikit (pt-6)
+          : 'px-0 py-0' // Top: Full
       }`}>
         <div 
           className={`
             relative flex items-center justify-between px-6 py-3
             border border-white/10 transition-all duration-500 ease-in-out
             ${isScrolled 
-              ? 'bg-mangka-primary/95 backdrop-blur-md shadow-lg rounded-full' // Floating Pill State
-              : 'bg-mangka-primary/85 backdrop-blur-sm shadow-none rounded-none rounded-b-[40px] md:py-5' // Full Width Top State
+              ? 'bg-mangka-primary/80 backdrop-blur-md shadow-lg rounded-full' // Floating Pill: Lebih transparan (/80)
+              : 'bg-mangka-primary/85 backdrop-blur-sm shadow-none rounded-none rounded-b-[40px] md:py-5' // Full Width Top
             }
           `}
         >
@@ -166,7 +170,7 @@ export const Navbar: React.FC = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className={`absolute left-4 right-4 md:hidden ${isScrolled ? 'top-20' : 'top-24'}`}
+            className={`absolute left-4 right-4 md:hidden ${isScrolled ? 'top-24' : 'top-24'}`}
           >
             <div className="bg-mangka-primary/95 backdrop-blur-xl border border-white/20 rounded-[32px] shadow-xl p-6 flex flex-col gap-4 items-center">
               {navLinks.map((link) => {
