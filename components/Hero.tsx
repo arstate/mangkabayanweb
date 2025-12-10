@@ -3,6 +3,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Star } from 'lucide-react';
 import { GlassCard } from './ui/GlassCard';
+import { SmartImage } from './ui/SmartImage';
 
 export const Hero: React.FC = () => {
   return (
@@ -65,7 +66,7 @@ export const Hero: React.FC = () => {
               <div className="flex -space-x-4">
                  {[1,2,3,4].map(i => (
                    <div key={i} className="w-12 h-12 rounded-full border-2 border-white bg-gray-200 overflow-hidden">
-                     <img src={`https://picsum.photos/100/100?random=${i+10}`} alt="Customer" className="w-full h-full object-cover" />
+                     <SmartImage src={`https://picsum.photos/100/100?random=${i+10}`} alt="Customer" className="w-full h-full object-cover" />
                    </div>
                  ))}
               </div>
@@ -84,7 +85,7 @@ export const Hero: React.FC = () => {
                 {/* Main Hero Image in Glass Container */}
                 <GlassCard className="w-full h-full p-3 md:p-4 rotate-3 hover:rotate-0 transition-transform duration-500">
                   <div className="w-full h-full rounded-[32px] overflow-hidden relative">
-                    <img 
+                    <SmartImage 
                       src="https://lh3.googleusercontent.com/drive-storage/AJQWtBNP15_A7aEmXe56Yz4CrTyTNvvc-i2qiSdC-JMtitqcBx4HFC3oRjyhsP7-q_ToHGXWNwCAVbofrU1SOqFr6p3zM_7xZi0-dqryJw=w1300" 
                       alt="Suasana Restoran Mangkabayan" 
                       width="1300"

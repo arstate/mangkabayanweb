@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { SmartImage } from './ui/SmartImage';
 
 const banners = [
   "https://lh3.googleusercontent.com/drive-storage/AJQWtBMg5SHVi9xbMN1J3_EFLvfP_cLKh-KY40DZY6yCKhjp0EOrEjax2UMOFylV02Hkp25jDMPAkbkm2qlXjt-iUhj4i-MDldL5PPjj=w1600",
@@ -27,6 +28,12 @@ const variants = {
   })
 };
 
+// Helper function to get proxy URL for background images (CSS)
+const getProxyUrl = (url: string) => {
+  if (!url || url.startsWith('data:') || url.startsWith('blob:') || url.includes('wsrv.nl')) return url;
+  return `https://wsrv.nl/?url=${encodeURIComponent(url)}&output=webp`;
+};
+
 export const PromoSlider: React.FC = () => {
   const [[page, direction], setPage] = useState([0, 0]);
 
@@ -44,6 +51,9 @@ export const PromoSlider: React.FC = () => {
   const paginate = (newDirection: number) => {
     setPage([page + newDirection, newDirection]);
   };
+
+  const currentBanner = banners[imageIndex];
+  const proxiedBanner = getProxyUrl(currentBanner);
 
   return (
     // overflow-visible is crucial to prevent shadow clipping
@@ -71,12 +81,12 @@ export const PromoSlider: React.FC = () => {
                 {/* Soft Ambient Glow */}
                 <div 
                   className="absolute inset-6 -bottom-2 bg-cover bg-center blur-3xl opacity-30 rounded-[50px] z-0 transform translate-y-4 scale-95 pointer-events-none"
-                  style={{ backgroundImage: `url(${banners[imageIndex]})` }}
+                  style={{ backgroundImage: `url(${proxiedBanner})` }}
                 />
 
                 {/* Main Image */}
-                <img 
-                  src={banners[imageIndex]} 
+                <SmartImage 
+                  src={currentBanner} 
                   alt={`Promo Banner ${imageIndex + 1}`}
                   className="relative z-10 w-full h-full object-contain md:object-cover rounded-[20px] md:rounded-[40px] shadow-2xl border border-white/20 bg-white/10 backdrop-blur-sm"
                   draggable="false"

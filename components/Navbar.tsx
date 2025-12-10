@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { SmartImage } from './ui/SmartImage';
 
 export const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -97,8 +98,8 @@ export const Navbar: React.FC = () => {
         >
           {/* Logo Section */}
           <Link to="/" onClick={(e) => isHomePage && window.scrollTo({top: 0, behavior: 'smooth'})} className="flex items-center z-20">
-            <img 
-              src="https://lh3.googleusercontent.com/drive-storage/AJQWtBNz62XJW_8Atikr1z2r7aTv6ACDAHD8infsA7NfmxhtcRrYgQFlS8l07pbE-ggQGhw671u-D9fLWJob3pzAzHx_byIuwIMxm-nO=w800" 
+            <SmartImage 
+              src="https://lh3.googleusercontent.com/drive-storage/AJQWtBOM0EpS_of5jWHjjZTyBPIDS04TNkRQJHAAhR0Jf6lsG9WXVhkA8HqUdSdmyJGZQRuPRiA-9gVQDIv60V52pTkky10jbZdS8WDYJA=w800" 
               alt="Mangkabayan Surabaya" 
               className="h-12 md:h-14 w-auto object-contain"
             />
