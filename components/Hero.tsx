@@ -1,8 +1,8 @@
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Star } from 'lucide-react';
 import { GlassCard } from './ui/GlassCard';
-import { SmartImage } from './ui/SmartImage';
 
 export const Hero: React.FC = () => {
   return (
@@ -17,16 +17,6 @@ export const Hero: React.FC = () => {
           
           {/* Text Content */}
           <div className="lg:w-1/2 space-y-8 relative z-10">
-            
-            {/* Decorative Pattern (Smart Positioning) */}
-            <div className="hidden lg:block absolute right-full top-1/2 -translate-y-1/2 translate-x-1/2 xl:translate-x-1/4 w-[500px] pointer-events-none select-none -z-10 transition-all duration-700">
-              <SmartImage 
-                src="https://lh3.googleusercontent.com/drive-storage/AJQWtBNMYhg1J2BGH1m77-0B1wNocd0TZsG7AVZ76U1MpcHMTfq9E6H-HzsiFtKWQDSjBaxXM_3nmID9g-9irVRi7LZJKrPn8oHCsa4f=w800" 
-                alt="Pattern Mangkabayan" 
-                className="w-full rotate-90 opacity-100"
-              />
-            </div>
-
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
@@ -75,7 +65,7 @@ export const Hero: React.FC = () => {
               <div className="flex -space-x-4">
                  {[1,2,3,4].map(i => (
                    <div key={i} className="w-12 h-12 rounded-full border-2 border-white bg-gray-200 overflow-hidden">
-                     <SmartImage src={`https://picsum.photos/100/100?random=${i+10}`} alt="Customer" className="w-full h-full object-cover" />
+                     <img src={`https://picsum.photos/100/100?random=${i+10}`} alt="Customer" className="w-full h-full object-cover" />
                    </div>
                  ))}
               </div>
@@ -94,9 +84,11 @@ export const Hero: React.FC = () => {
                 {/* Main Hero Image in Glass Container */}
                 <GlassCard className="w-full h-full p-3 md:p-4 rotate-3 hover:rotate-0 transition-transform duration-500">
                   <div className="w-full h-full rounded-[32px] overflow-hidden relative">
-                    <SmartImage 
+                    <img 
                       src="https://lh3.googleusercontent.com/drive-storage/AJQWtBNP15_A7aEmXe56Yz4CrTyTNvvc-i2qiSdC-JMtitqcBx4HFC3oRjyhsP7-q_ToHGXWNwCAVbofrU1SOqFr6p3zM_7xZi0-dqryJw=w1300" 
                       alt="Suasana Restoran Mangkabayan" 
+                      width="1300"
+                      height="1300"
                       className="w-full h-full object-cover scale-105 hover:scale-100 transition-transform duration-700"
                     />
                   </div>
