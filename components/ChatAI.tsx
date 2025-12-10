@@ -1,8 +1,8 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, X, Send, Sparkles } from 'lucide-react';
 import { GoogleGenAI } from "@google/genai";
+import { SmartImage } from './ui/SmartImage';
 
 // Konfigurasi System Prompt berdasarkan Data PDF
 const SYSTEM_INSTRUCTION = `
@@ -103,7 +103,7 @@ export const ChatAI: React.FC = () => {
             <div className="flex items-center justify-between p-4 bg-gradient-to-r from-mangka-primary/10 to-mangka-secondary/10 border-b border-white/30">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-inner overflow-hidden border border-white/50">
-                   <img 
+                   <SmartImage 
                       src="https://lh3.googleusercontent.com/drive-storage/AJQWtBOqwPdVwVza5Hpej68hmgYEpyupx8h3zZUlYk81LNKnnl2-9_U_uTHx1tFSuM-s7OfpE6Cp0yNVO71htbt13XBhqVhQ27lQEXJzhQ=w200" 
                       alt="Logo Mangkabayan"
                       className="w-full h-full object-cover"

@@ -1,6 +1,6 @@
-
 import React from 'react';
 import { MapPin, Phone, Instagram, Mail } from 'lucide-react';
+import { SmartImage } from './ui/SmartImage';
 
 export const Footer: React.FC = () => {
   return (
@@ -11,13 +11,10 @@ export const Footer: React.FC = () => {
           {/* Brand */}
           <div className="space-y-6">
             <div>
-              <img 
-                src="https://lh3.googleusercontent.com/drive-storage/AJQWtBOdE7aCe1oFhR3woupMRqe-YHUcOIw0cQY-1eG7m6WgRWRVBNjT2CO5ZZWvckXrmuIh0Ve36XSietbiFmFFh43EwVUqDudpWeFJ=w800" 
-                alt="LOGO MANGKABAYAN NEW.png" 
-                width="800"
-                loading="lazy"
+              <SmartImage 
+                src="https://lh3.googleusercontent.com/drive-storage/AJQWtBM2iY6gLJe4-rIGB1-6_n20kUMVJCyMUwcE0IaPO_S8J2ZPw4QaVseuIw8ebjT8cuS7wU9o-sPHPsKkuyu93gcLNZ-PxHPQ2oxK1w=w800" 
+                alt="LOGO MANGKABAYAN NEW" 
                 className="w-48 h-auto mb-2"
-                style={{ maxWidth: '100%', height: 'auto' }}
               />
             </div>
             <p className="text-white/70 font-sans leading-relaxed text-sm">

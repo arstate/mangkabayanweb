@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { ArrowLeft, Sparkles, Filter, X, ZoomIn } from 'lucide-react';
 import { GlassCard } from '../components/ui/GlassCard';
 import { MenuItem } from '../types';
+import { SmartImage } from '../components/ui/SmartImage';
 
 // Data Menu Lengkap (Sesuai Permintaan)
 const allMenus: MenuItem[] = [
@@ -135,10 +136,9 @@ export const FullMenuPage: React.FC = () => {
                 className="relative overflow-hidden rounded-[24px] aspect-square mb-6"
                 onClick={() => setSelectedItem(item)}
               >
-                <img 
+                <SmartImage 
                   src={item.image} 
                   alt={item.name} 
-                  loading="lazy"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
                 />
                 {item.isRecommended && (
@@ -203,7 +203,7 @@ export const FullMenuPage: React.FC = () => {
 
               {/* Image Section */}
               <div className="w-full md:w-1/2 h-64 md:h-auto relative bg-gray-100">
-                <img 
+                <SmartImage 
                   src={selectedItem.image} 
                   alt={selectedItem.name} 
                   className="w-full h-full object-cover"

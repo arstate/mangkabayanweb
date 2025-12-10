@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { GlassCard } from './ui/GlassCard';
 import { MenuItem } from '../types';
 import { Sparkles } from 'lucide-react';
+import { SmartImage } from './ui/SmartImage';
 
 const featuredMenu: MenuItem[] = [
   {
@@ -55,7 +56,7 @@ export const Menu: React.FC = () => {
               className="group h-full flex flex-col p-4"
             >
               <div className="relative overflow-hidden rounded-[24px] aspect-square mb-6">
-                <img 
+                <SmartImage 
                   src={item.image} 
                   alt={item.name} 
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 

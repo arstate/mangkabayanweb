@@ -1,5 +1,6 @@
 import React from 'react';
 import { GlassCard } from './ui/GlassCard';
+import { SmartImage } from './ui/SmartImage';
 
 export const Story: React.FC = () => {
   return (
@@ -23,12 +24,12 @@ export const Story: React.FC = () => {
             </div>
             <div className="md:w-1/2 w-full">
               <div className="grid grid-cols-2 gap-4">
-                <img 
+                <SmartImage 
                   src="https://lh3.googleusercontent.com/drive-storage/AJQWtBOKfa7AIc6joNf6c1F7mxZ9WM6Y2bHTAwxVElkyvVVAX4IiwMq89BzX6_37KjuBGOyNqRLx1fV1tN1fCtdvRosg0PgGsUwCXb5PWw=w800" 
                   alt="Interior Restoran" 
                   className="rounded-[32px] w-full h-64 object-cover transform translate-y-8" 
                 />
-                <img 
+                <SmartImage 
                   src="https://lh3.googleusercontent.com/drive-storage/AJQWtBP5mSBVyxBBBg5UW-y8YAjSMFR_f7wgL-ysT80DjA53WrVwgXbfbZmg7U4TZoAUgW7N53-IGpDGKWdMYjs13gf3SNKawTIZYg3eHA=w800" 
                   alt="Suasana Makan" 
                   className="rounded-[32px] w-full h-64 object-cover" 

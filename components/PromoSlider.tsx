@@ -1,11 +1,17 @@
-
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { SmartImage } from './ui/SmartImage';
 
 const banners = [
   "https://lh3.googleusercontent.com/drive-storage/AJQWtBMg5SHVi9xbMN1J3_EFLvfP_cLKh-KY40DZY6yCKhjp0EOrEjax2UMOFylV02Hkp25jDMPAkbkm2qlXjt-iUhj4i-MDldL5PPjj=w1600",
   "https://lh3.googleusercontent.com/drive-storage/AJQWtBMXGRreAy7TvlTDEew0VixTQiwE6avoVKJnBkeDJzBS-OINb4i8vUudlRvStwE10p6jrAuoPyFKY_G5GZjtulH1cx3QNY8hqK34=w1600"
 ];
+
+// Helper to get proxied URL for background images (since SmartImage only works for <img>)
+const getProxiedUrl = (url: string) => {
+   const encodedUrl = encodeURIComponent(url);
+   return `https://wsrv.nl/?url=${encodedUrl}&output=webp&blur=20`;
+};
 
 const variants = {
   enter: (direction: number) => ({
@@ -68,19 +74,21 @@ export const PromoSlider: React.FC = () => {
                 }}
                 className="absolute inset-0 w-full h-full flex items-center justify-center"
               >
-                {/* Soft Ambient Glow */}
+                {/* Soft Ambient Glow (Using Proxied URL for optimization) */}
                 <div 
                   className="absolute inset-6 -bottom-2 bg-cover bg-center blur-3xl opacity-30 rounded-[50px] z-0 transform translate-y-4 scale-95 pointer-events-none"
-                  style={{ backgroundImage: `url(${banners[imageIndex]})` }}
+                  style={{ backgroundImage: `url(${getProxiedUrl(banners[imageIndex])})` }}
                 />
 
                 {/* Main Image */}
-                <img 
-                  src={banners[imageIndex]} 
-                  alt={`Promo Banner ${imageIndex + 1}`}
-                  className="relative z-10 w-full h-full object-contain md:object-cover rounded-[20px] md:rounded-[40px] shadow-2xl border border-white/20 bg-white/10 backdrop-blur-sm"
-                  draggable="false"
-                />
+                <div className="relative z-10 w-full h-full rounded-[20px] md:rounded-[40px] shadow-2xl border border-white/20 bg-white/10 backdrop-blur-sm overflow-hidden">
+                   <SmartImage 
+                    src={banners[imageIndex]} 
+                    alt={`Promo Banner ${imageIndex + 1}`}
+                    className="w-full h-full object-contain md:object-cover"
+                    draggable={false}
+                   />
+                </div>
               </motion.div>
             </AnimatePresence>
 
