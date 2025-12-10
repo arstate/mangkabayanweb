@@ -12,6 +12,16 @@ export const Hero: React.FC = () => {
       <div className="absolute top-20 left-10 w-64 h-64 bg-mangka-secondary/10 rounded-full blur-3xl -z-10" />
       <div className="absolute bottom-20 right-20 w-80 h-80 bg-mangka-primary/5 rounded-full blur-3xl -z-10" />
 
+      {/* Decorative Pattern (Desktop Only) */}
+      <div className="hidden lg:block absolute left-0 top-1/2 -translate-y-1/2 z-0 pointer-events-none select-none -ml-16">
+        <img 
+          src="https://lh3.googleusercontent.com/drive-storage/AJQWtBNMYhg1J2BGH1m77-0B1wNocd0TZsG7AVZ76U1MpcHMTfq9E6H-HzsiFtKWQDSjBaxXM_3nmID9g-9irVRi7LZJKrPn8oHCsa4f=w800" 
+          alt="Pattern Mangkabayan" 
+          className="w-48 rotate-90 opacity-80"
+          loading="lazy"
+        />
+      </div>
+
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
           
