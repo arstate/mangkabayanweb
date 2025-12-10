@@ -7,28 +7,28 @@ import { Sparkles } from 'lucide-react';
 const featuredMenu: MenuItem[] = [
   {
     id: 1,
-    name: "Gurame Bakar Madu",
-    description: "Ikan gurame segar dibakar dengan olesan madu murni dan rempah rahasia.",
+    name: "Gurame Bakar",
+    description: "Gurame bakar dengan bumbu kecap manis spesial yang meresap sempurna.",
     image: "https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     isRecommended: true
   },
   {
     id: 2,
     name: "Nasi Liwet Kastrol",
-    description: "Nasi gurih dimasak dalam kastrol besi dengan teri medan, pete, dan kemangi.",
-    image: "https://images.unsplash.com/photo-1632778149955-e80f8ceca2e8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    description: "Nasi timbel bungkus daun pisang dengan lauk lengkap.",
+    image: "https://images.unsplash.com/photo-1629135686884-a13101ebc751?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     isRecommended: true
   },
   {
     id: 3,
     name: "Udang Bakar Madu",
-    description: "Udang windu pilihan dibakar sempurna dengan saus madu manis gurih.",
+    description: "Udang pilihan dibakar dengan olesan madu murni.",
     image: "https://images.unsplash.com/photo-1625938145744-e38051524294?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
   },
   {
     id: 4,
     name: "Sayur Asem",
-    description: "Kuah segar dengan isian melinjo, jagung manis, dan kacang tanah khas Sunda.",
+    description: "Kuah segar manis asam dengan jagung dan labu siam.",
     image: "https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
   }
 ];
@@ -73,9 +73,9 @@ export const Menu: React.FC = () => {
                 <p className="text-sm text-mangka-primary/70 font-sans leading-relaxed mb-4 flex-1">
                   {item.description}
                 </p>
-                <button className="w-full py-2 rounded-full border border-mangka-primary/20 text-mangka-primary text-sm font-bold hover:bg-mangka-primary hover:text-white transition-colors">
-                  Pesan Sekarang
-                </button>
+                <Link to="/menu" className="w-full py-2 rounded-full border border-mangka-primary/20 text-mangka-primary text-sm font-bold hover:bg-mangka-primary hover:text-white transition-colors text-center block">
+                  Lihat Detail
+                </Link>
               </div>
             </GlassCard>
           ))}

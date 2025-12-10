@@ -4,10 +4,10 @@ export interface MenuItem {
   id: number;
   name: string;
   description: string;
-  price?: string;
+  price?: string; // Optional, can be removed from UI
   image: string;
   isRecommended?: boolean;
-  category?: 'ikan' | 'ayam_daging' | 'sayur' | 'minuman' | 'paket';
+  category?: 'ikan' | 'ayam_daging' | 'nasi_mie' | 'sayuran' | 'pepes' | 'sambal' | 'minuman';
 }
 
 export interface Facility {
