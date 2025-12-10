@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const banners = [
   "https://lh3.googleusercontent.com/drive-storage/AJQWtBMg5SHVi9xbMN1J3_EFLvfP_cLKh-KY40DZY6yCKhjp0EOrEjax2UMOFylV02Hkp25jDMPAkbkm2qlXjt-iUhj4i-MDldL5PPjj=w1600",
-  "https://lh3.googleusercontent.com/drive-storage/AJQWtBOHTeUhgmv4Il9e35AAFFLHEePVOwW91vxkgniMYqbLwX2fr5VyX9kQGcU7VhaK53A_vBuUMr2Nwk7l4rFXE4DUeW5lnCLuo3pE=w1600"
+  "https://lh3.googleusercontent.com/drive-storage/AJQWtBMXGRreAy7TvlTDEew0VixTQiwE6avoVKJnBkeDJzBS-OINb4i8vUudlRvStwE10p6jrAuoPyFKY_G5GZjtulH1cx3QNY8hqK34=w1600"
 ];
 
 const variants = {
