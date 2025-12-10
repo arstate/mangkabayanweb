@@ -1,17 +1,20 @@
+
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 export const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const isHomePage = location.pathname === '/';
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      // Ubah state scroll ketika melewati 20px
+      setIsScrolled(window.scrollY > 20);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -25,18 +28,36 @@ export const Navbar: React.FC = () => {
     { name: 'Lokasi', href: '/#location', isHash: true },
   ];
 
-  // Function to handle navigation
-  const handleNavClick = (href: string, isHash: boolean) => {
+  // Function to handle navigation and smooth scrolling
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement> | React.MouseEvent<HTMLButtonElement>, href: string, isHash: boolean) => {
     setIsMobileOpen(false);
-    if (isHash && isHomePage) {
-      // If we are already on home page, just scroll to id
-      const elementId = href.replace('/#', '');
-      const element = document.getElementById(elementId);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+
+    if (isHash) {
+      const targetId = href.replace('/#', '');
+      
+      if (isHomePage) {
+        // Jika sudah di homepage, cegah navigasi default dan lakukan smooth scroll manual
+        e.preventDefault();
+        const element = document.getElementById(targetId);
+        if (element) {
+          // Offset sedikit untuk header
+          const headerOffset = 100;
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth"
+          });
+          
+          // Update URL hash tanpa jump
+          window.history.pushState(null, '', href);
+        }
+      } else {
+        // Jika di halaman lain, biarkan Link bekerja (pindah ke /#id), App.tsx yang akan handle scroll
+        return; 
       }
     }
-    // If not on home page, Link component handles navigation to /#id
   };
 
   // WhatsApp Icon Component
@@ -54,21 +75,24 @@ export const Navbar: React.FC = () => {
 
   return (
     <header 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'py-2' : 'py-4 md:py-6'
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out`}
     >
-      <div className="container mx-auto px-4 md:px-6">
+      {/* Wrapper untuk mengatur padding container luar */}
+      <div className={`transition-all duration-500 ease-in-out ${
+        isScrolled ? 'px-4 md:px-6 py-2' : 'px-0 py-0'
+      }`}>
         <div 
           className={`
             relative flex items-center justify-between px-6 py-3
-            bg-mangka-primary/85 backdrop-blur-md border border-white/10
-            shadow-lg rounded-full transition-all duration-300
-            ${isScrolled ? 'bg-mangka-primary shadow-black/20' : 'bg-mangka-primary/85'}
+            border border-white/10 transition-all duration-500 ease-in-out
+            ${isScrolled 
+              ? 'bg-mangka-primary/95 backdrop-blur-md shadow-lg rounded-full' // Floating Pill State
+              : 'bg-mangka-primary/85 backdrop-blur-sm shadow-none rounded-none rounded-b-[40px] md:py-5' // Full Width Top State
+            }
           `}
         >
           {/* Logo Section */}
-          <Link to="/" className="flex items-center z-20">
+          <Link to="/" onClick={(e) => isHomePage && window.scrollTo({top: 0, behavior: 'smooth'})} className="flex items-center z-20">
             <img 
               src="https://lh3.googleusercontent.com/drive-storage/AJQWtBNz62XJW_8Atikr1z2r7aTv6ACDAHD8infsA7NfmxhtcRrYgQFlS8l07pbE-ggQGhw671u-D9fLWJob3pzAzHx_byIuwIMxm-nO=w800" 
               alt="Mangkabayan Surabaya" 
@@ -79,21 +103,24 @@ export const Navbar: React.FC = () => {
           {/* Desktop Menu */}
           <nav className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => {
-              if (isHomePage && link.isHash) {
+              // Jika ini link hash (#)
+              if (link.isHash) {
                  return (
                    <a
                      key={link.name}
-                     href={link.href.replace('/', '')} 
+                     href={link.href}
+                     onClick={(e) => handleNavClick(e, link.href, true)}
                      className="text-white hover:text-mangka-secondary font-medium text-sm transition-colors duration-200 cursor-pointer"
                    >
                      {link.name}
                    </a>
                  )
               }
+              // Link biasa (non-hash)
               return (
                 <Link 
                   key={link.name} 
-                  to={link.href} 
+                  to={link.href}
                   className="text-white hover:text-mangka-secondary font-medium text-sm transition-colors duration-200"
                 >
                   {link.name}
@@ -139,16 +166,16 @@ export const Navbar: React.FC = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="absolute top-20 left-4 right-4 md:hidden"
+            className={`absolute left-4 right-4 md:hidden ${isScrolled ? 'top-20' : 'top-24'}`}
           >
             <div className="bg-mangka-primary/95 backdrop-blur-xl border border-white/20 rounded-[32px] shadow-xl p-6 flex flex-col gap-4 items-center">
               {navLinks.map((link) => {
-                 if (isHomePage && link.isHash) {
+                 if (link.isHash) {
                     return (
                       <a 
                         key={link.name}
-                        href={link.href.replace('/', '')}
-                        onClick={() => setIsMobileOpen(false)}
+                        href={link.href}
+                        onClick={(e) => handleNavClick(e, link.href, true)}
                         className="text-white text-lg font-serif font-medium hover:text-mangka-secondary transition-colors"
                       >
                          {link.name}
