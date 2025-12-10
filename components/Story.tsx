@@ -24,12 +24,12 @@ export const Story: React.FC = () => {
             <div className="md:w-1/2 w-full">
               <div className="grid grid-cols-2 gap-4">
                 <img 
-                  src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                  src="https://lh3.googleusercontent.com/drive-storage/AJQWtBOKfa7AIc6joNf6c1F7mxZ9WM6Y2bHTAwxVElkyvVVAX4IiwMq89BzX6_37KjuBGOyNqRLx1fV1tN1fCtdvRosg0PgGsUwCXb5PWw=w800" 
                   alt="Interior Restoran" 
                   className="rounded-[32px] w-full h-64 object-cover transform translate-y-8" 
                 />
                 <img 
-                  src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                  src="https://lh3.googleusercontent.com/drive-storage/AJQWtBP5mSBVyxBBBg5UW-y8YAjSMFR_f7wgL-ysT80DjA53WrVwgXbfbZmg7U4TZoAUgW7N53-IGpDGKWdMYjs13gf3SNKawTIZYg3eHA=w800" 
                   alt="Suasana Makan" 
                   className="rounded-[32px] w-full h-64 object-cover" 
                 />
