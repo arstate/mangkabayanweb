@@ -13,7 +13,7 @@ export const Hero: React.FC = () => {
       <div className="absolute bottom-20 right-20 w-80 h-80 bg-mangka-primary/5 rounded-full blur-3xl -z-10" />
 
       {/* Decorative Pattern (Desktop Only) */}
-      <div className="hidden lg:block absolute left-0 top-1/2 -translate-y-1/2 z-0 pointer-events-none select-none -ml-32">
+      <div className="hidden lg:block absolute left-0 top-1/2 -translate-y-1/2 z-0 pointer-events-none select-none -ml-64">
         <img 
           src="https://lh3.googleusercontent.com/drive-storage/AJQWtBN9ip0Nw2b_lz9ITEoIcmXxYxzd5jyC21N86oLKGUDs8m6qXfXHcnfJKnDv6finMPr0QczaOBgI3tOm_ZJcwDvkJqhhl9ErZ2dt4g=w800" 
           alt="Pattern Mangkabayan" 
