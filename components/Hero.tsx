@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Star } from 'lucide-react';
@@ -84,14 +85,10 @@ export const Hero: React.FC = () => {
                 <GlassCard className="w-full h-full p-3 md:p-4 rotate-3 hover:rotate-0 transition-transform duration-500">
                   <div className="w-full h-full rounded-[32px] overflow-hidden relative">
                     <img 
-                      src="https://lh3.googleusercontent.com/drive-storage/AJQWtBMn7SBtU_bKdJp9dfCTky9iV7Z3VI6VNpeI656AQiW9YTGqsXRn_7bBsoNPu_EP8QhyNWCr4CjbfMta73fSJEVKcQtAdJF7tcGKng=w1200" 
+                      src="https://lh3.googleusercontent.com/drive-storage/AJQWtBNP15_A7aEmXe56Yz4CrTyTNvvc-i2qiSdC-JMtitqcBx4HFC3oRjyhsP7-q_ToHGXWNwCAVbofrU1SOqFr6p3zM_7xZi0-dqryJw=w800" 
                       alt="Suasana Mangkabayan" 
                       className="w-full h-full object-cover scale-110 hover:scale-100 transition-transform duration-700"
                     />
-                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-8">
-                       <p className="text-white font-serif text-2xl italic">Signature Dish</p>
-                       <p className="text-mangka-secondary font-bold text-3xl">Gurame Bakar</p>
-                    </div>
                   </div>
                 </GlassCard>
                 
