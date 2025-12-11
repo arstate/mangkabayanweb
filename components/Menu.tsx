@@ -18,7 +18,7 @@ const featuredMenu: MenuItem[] = [
     id: 2,
     name: "Nasi Liwet Kastrol",
     description: "Nasi timbel bungkus daun pisang dengan lauk lengkap.",
-    image: "https://images.unsplash.com/photo-1629135686884-a13101ebc751?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    image: "https://lh3.googleusercontent.com/drive-storage/AJQWtBOMztMxWg891dALLylvHZPWw_rgtug-Bs7GpwZdWcwCzp2NytYXrrklSCJG9QwIq8EZtTkaksgxdwMWSzD1mCfFDEzpz2LpHJpAxQ=w800",
     isRecommended: true
   },
   {
@@ -31,7 +31,7 @@ const featuredMenu: MenuItem[] = [
     id: 4,
     name: "Sayur Asem",
     description: "Kuah segar manis asam dengan jagung dan labu siam.",
-    image: "https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    image: "https://lh3.googleusercontent.com/drive-storage/AJQWtBMAGd-zOSdtsVKR_cLyAnnLK2_KLh9f5mWW_mHq1J4bJ6irdYICzP87VdcaZC8q6XqoRCqtr8uJLG6Yt2RSYYJdXPCpb2b6I547PQ=w800",
   }
 ];
 
