@@ -9,6 +9,7 @@ import { Menu } from './components/Menu';
 import { Facilities } from './components/Facilities';
 import { Footer } from './components/Footer';
 import { FullMenuPage } from './pages/FullMenuPage';
+import { AboutPage } from './pages/AboutPage';
 import { ChatAI } from './components/ChatAI';
 
 // Component for the Landing Page sections
@@ -71,6 +72,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/menu" element={<FullMenuPage />} />
+          <Route path="/about" element={<AboutPage />} />
         </Routes>
 
         {/* Floating AI Chat Assistant */}

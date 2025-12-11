@@ -1,5 +1,7 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 import { GlassCard } from './ui/GlassCard';
 import { SmartImage } from './ui/SmartImage';
 
@@ -22,6 +24,16 @@ export const Story: React.FC = () => {
                 Di cabang Surabaya, kami memadukan keaslian bumbu tradisional dengan hasil laut terbaik. 
                 Filosofi kami sederhana: menyajikan makanan yang membuat Anda merasa <em>pulang ke rumah</em>.
               </p>
+              
+              <div className="pt-4">
+                <Link 
+                  to="/about" 
+                  className="inline-flex items-center gap-2 bg-mangka-primary text-white px-8 py-3 rounded-full font-bold hover:bg-mangka-secondary transition-colors duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                >
+                  Selengkapnya Tentang Kami
+                  <ArrowRight size={18} />
+                </Link>
+              </div>
             </div>
             <div className="md:w-1/2 w-full">
               <div className="grid grid-cols-2 gap-4">
