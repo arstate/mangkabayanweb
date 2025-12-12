@@ -99,7 +99,7 @@ export const Navbar: React.FC = () => {
           {/* Logo Section */}
           <Link to="/" onClick={(e) => isHomePage && window.scrollTo({top: 0, behavior: 'smooth'})} className="flex items-center z-20">
             <SmartImage 
-              src="https://lh3.googleusercontent.com/drive-storage/AJQWtBOM0EpS_of5jWHjjZTyBPIDS04TNkRQJHAAhR0Jf6lsG9WXVhkA8HqUdSdmyJGZQRuPRiA-9gVQDIv60V52pTkky10jbZdS8WDYJA=w800" 
+              src="https://lh3.googleusercontent.com/drive-storage/AJQWtBNQaB8jsAj2zl5FMhWL8LJ58OkJlfCalJpdzs1qzfUEYCCLu9xq2gZIthdPYRqqLcmaDaMj89WDxJRdMRi9JnytTIOdTYhIbtrm=w800" 
               alt="Mangkabayan Surabaya" 
               className="h-12 md:h-14 w-auto object-contain"
             />

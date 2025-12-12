@@ -86,7 +86,7 @@ export const Hero: React.FC = () => {
                 <GlassCard className="w-full h-full p-3 md:p-4 rotate-3 hover:rotate-0 transition-transform duration-500">
                   <div className="w-full h-full rounded-[32px] overflow-hidden relative">
                     <SmartImage 
-                      src="https://lh3.googleusercontent.com/drive-storage/AJQWtBNP15_A7aEmXe56Yz4CrTyTNvvc-i2qiSdC-JMtitqcBx4HFC3oRjyhsP7-q_ToHGXWNwCAVbofrU1SOqFr6p3zM_7xZi0-dqryJw=w1300" 
+                      src="https://lh3.googleusercontent.com/drive-storage/AJQWtBMH8e0LOVDS9HK191uG1NL-Z7FBUjxZ91ZTbp12XGTgzfWX3rNUQZ5r26EjbY9DpUe89uiOmgcxWVb8Gs55ZWqzQQqv783Xnh05fw=w800" 
                       alt="Suasana Restoran Mangkabayan" 
                       width="1300"
                       height="1300"

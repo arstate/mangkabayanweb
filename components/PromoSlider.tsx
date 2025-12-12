@@ -4,8 +4,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { SmartImage } from './ui/SmartImage';
 
 const banners = [
-  "https://lh3.googleusercontent.com/drive-storage/AJQWtBMg5SHVi9xbMN1J3_EFLvfP_cLKh-KY40DZY6yCKhjp0EOrEjax2UMOFylV02Hkp25jDMPAkbkm2qlXjt-iUhj4i-MDldL5PPjj=w1600",
-  "https://lh3.googleusercontent.com/drive-storage/AJQWtBMXGRreAy7TvlTDEew0VixTQiwE6avoVKJnBkeDJzBS-OINb4i8vUudlRvStwE10p6jrAuoPyFKY_G5GZjtulH1cx3QNY8hqK34=w1600"
+  "https://lh3.googleusercontent.com/drive-storage/AJQWtBMQrSLXP0TXeNTlPTvdNcurY-uSU1gRzvHgTtJXayRRh_37SWID9c-kiFWu6RGvLSrbKwwigiRvoQEOlkMR7TpLWykAkpIQOkxnbQ=w800",
+  "https://lh3.googleusercontent.com/drive-storage/AJQWtBObcv3nAWY2IkgaazFutaW8X1PcyK_fHMGspr56ytcy2GMaNKuu_63lMWkK5-VJnfcjIcYsDX4pmScsIRkFaIDdDWQ3jYehOOdy8g=w800"
 ];
 
 const variants = {

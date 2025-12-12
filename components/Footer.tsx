@@ -13,7 +13,7 @@ export const Footer: React.FC = () => {
           <div className="space-y-6">
             <div>
               <SmartImage 
-                src="https://lh3.googleusercontent.com/drive-storage/AJQWtBOM0EpS_of5jWHjjZTyBPIDS04TNkRQJHAAhR0Jf6lsG9WXVhkA8HqUdSdmyJGZQRuPRiA-9gVQDIv60V52pTkky10jbZdS8WDYJA=w800" 
+                src="https://lh3.googleusercontent.com/drive-storage/AJQWtBNQaB8jsAj2zl5FMhWL8LJ58OkJlfCalJpdzs1qzfUEYCCLu9xq2gZIthdPYRqqLcmaDaMj89WDxJRdMRi9JnytTIOdTYhIbtrm=w800" 
                 alt="LOGO MANGKABAYAN NEW.png" 
                 width="800"
                 loading="lazy"
