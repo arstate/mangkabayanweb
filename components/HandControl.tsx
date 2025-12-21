@@ -1,7 +1,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MousePointer2, MoveUp, MoveDown, Activity, Zap, Target, Hand, Cpu } from 'lucide-react';
+import { MousePointer2, MoveUp, MoveDown, Activity, Zap, Target, Hand, Cpu, Focus } from 'lucide-react';
 
 declare global {
   interface Window {
@@ -31,13 +31,18 @@ export const HandControl: React.FC = () => {
   const scrollVelocity = useRef(0);
   const isClickProcessing = useRef(false);
 
+  // Logic for Relative Tracking (Air Mouse Style)
+  const isCalibrated = useRef(false);
+  const handAnchor = useRef({ x: 0.5, y: 0.5 });
+  const screenCenter = useRef({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
+
   // LOOP UTAMA: Pergerakan Kursor & Scroll
   useEffect(() => {
     let animationFrame: number;
     
     const updateUI = () => {
-      // Smoothing kursor dengan Lerp (Linear Interpolation)
-      const lerpFactor = 0.18;
+      // Smoothing kursor dengan Lerp - 0.20 untuk responsivitas lebih tinggi
+      const lerpFactor = 0.20;
       currentPos.current.x += (targetPos.current.x - currentPos.current.x) * lerpFactor;
       currentPos.current.y += (targetPos.current.y - currentPos.current.y) * lerpFactor;
 
@@ -45,7 +50,7 @@ export const HandControl: React.FC = () => {
         cursorRef.current.style.transform = `translate3d(${currentPos.current.x}px, ${currentPos.current.y}px, 0)`;
       }
 
-      // Scroll Dinamis: Kecepatan tinggi (45px per frame)
+      // Hyper Scroll: Kecepatan sangat tinggi (75px per frame)
       if (scrollVelocity.current !== 0) {
         window.scrollBy({
           top: scrollVelocity.current,
@@ -71,6 +76,7 @@ export const HandControl: React.FC = () => {
       setIsHandVisible(false);
       setGestureMode('none');
       scrollVelocity.current = 0;
+      isCalibrated.current = false;
     }
   };
 
@@ -83,7 +89,7 @@ export const HandControl: React.FC = () => {
 
     hands.setOptions({
       maxNumHands: 2,
-      modelComplexity: 0, // Mode tercepat (Lite)
+      modelComplexity: 0,
       minDetectionConfidence: 0.5,
       minTrackingConfidence: 0.5,
       selfieMode: true,
@@ -93,24 +99,20 @@ export const HandControl: React.FC = () => {
       const canvasCtx = canvasRef.current?.getContext('2d');
       if (!canvasCtx || !canvasRef.current) return;
 
-      // MODE GELAP: Membersihkan canvas dengan warna hitam pekat
+      // MODE ULTRA-GELAP (Pure Black Monitor)
       canvasCtx.save();
-      canvasCtx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
       canvasCtx.fillStyle = '#000000';
       canvasCtx.fillRect(0, 0, canvasRef.current.width, canvasRef.current.height);
       
-      // GRID DEKORATIF (Radar style)
-      canvasCtx.strokeStyle = 'rgba(255, 157, 59, 0.05)';
-      canvasCtx.lineWidth = 1;
-      for(let i=0; i<canvasRef.current.width; i+=20) {
+      // GRID TELEMETRY
+      canvasCtx.strokeStyle = 'rgba(255, 157, 59, 0.08)';
+      canvasCtx.lineWidth = 0.5;
+      for(let i=0; i<canvasRef.current.width; i+=40) {
         canvasCtx.beginPath(); canvasCtx.moveTo(i, 0); canvasCtx.lineTo(i, canvasRef.current.height); canvasCtx.stroke();
       }
-      for(let j=0; j<canvasRef.current.height; j+=20) {
+      for(let j=0; j<canvasRef.current.height; j+=40) {
         canvasCtx.beginPath(); canvasCtx.moveTo(0, j); canvasCtx.lineTo(canvasRef.current.width, j); canvasCtx.stroke();
       }
-
-      let rightHandFound = false;
-      let leftHandFound = false;
 
       if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
         setIsHandVisible(true);
@@ -119,7 +121,7 @@ export const HandControl: React.FC = () => {
           const isRightHand = label === 'Right'; 
           const isLeftHand = label === 'Left';
 
-          // HANYA GAMBAR SKELETON (Tanpa Video Preview)
+          // Render Skeletal Only
           window.drawConnectors(canvasCtx, landmarks, window.HAND_CONNECTIONS, { 
             color: isRightHand ? '#FF9D3B' : '#FFFFFF', 
             lineWidth: 2 
@@ -130,10 +132,8 @@ export const HandControl: React.FC = () => {
             radius: 2
           });
 
-          // LOGIKA NAVIGASI (Tangan Kanan)
+          // TANGAN KANAN: Navigasi & Re-centering
           if (isRightHand) {
-            rightHandFound = true;
-            
             const tips = [8, 12, 16, 20];
             const pips = [6, 10, 14, 18];
             let upFingers = 0;
@@ -141,30 +141,55 @@ export const HandControl: React.FC = () => {
               if (landmarks[tipIdx].y < landmarks[pips[i]].y) upFingers++;
             });
 
-            // Target Kursor (EMA Filter)
-            const rawX = landmarks[8].x * window.innerWidth;
-            const rawY = landmarks[8].y * window.innerHeight;
-            targetPos.current = { x: rawX, y: rawY };
+            const currentHandX = landmarks[8].x;
+            const currentHandY = landmarks[8].y;
 
-            // GESTURE MAPPING & SPEED BOOST
+            // 1. LOGIKA GENGGAMAN (RESET KE TENGAH)
             if (upFingers === 0) {
               setGestureMode('reset');
               scrollVelocity.current = 0;
-            } else if (upFingers === 1) {
+              isCalibrated.current = false; // Reset kalibrasi
+              
+              // Paksa kursor ke tengah secara instan
+              targetPos.current = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+              currentPos.current = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+            } 
+            
+            // 2. LOGIKA POINTER (RELATIVE CONTROL)
+            else if (upFingers === 1) {
               setGestureMode('pointer');
               scrollVelocity.current = 0;
-            } else if (upFingers === 2) {
+
+              // Jika baru saja melepas genggaman, tentukan titik jangkar baru
+              if (!isCalibrated.current) {
+                handAnchor.current = { x: currentHandX, y: currentHandY };
+                isCalibrated.current = true;
+              }
+
+              // Hitung Offset dari tengah
+              // Gain 2.5 agar gerakan tangan kecil menghasilkan gerakan kursor besar (Luxury feel)
+              const gain = 2.5;
+              const offsetX = (currentHandX - handAnchor.current.x) * window.innerWidth * gain;
+              const offsetY = (currentHandY - handAnchor.current.y) * window.innerHeight * gain;
+
+              targetPos.current = { 
+                x: (window.innerWidth / 2) + offsetX, 
+                y: (window.innerHeight / 2) + offsetY 
+              };
+            } 
+            
+            // 3. LOGIKA SCROLL (HYPER SPEED)
+            else if (upFingers === 2) {
               setGestureMode('scroll-up');
-              scrollVelocity.current = -45; // SPEED BOOST UP
+              scrollVelocity.current = -75;
             } else if (upFingers >= 3) {
               setGestureMode('scroll-down');
-              scrollVelocity.current = 45; // SPEED BOOST DOWN
+              scrollVelocity.current = 75;
             }
           }
 
-          // LOGIKA KLIK (Tangan Kiri)
+          // TANGAN KIRI: Logika Klik
           if (isLeftHand) {
-            leftHandFound = true;
             const thumbTip = landmarks[4];
             const indexTip = landmarks[8];
             const dist = Math.hypot(thumbTip.x - indexTip.x, thumbTip.y - indexTip.y);
@@ -212,7 +237,7 @@ export const HandControl: React.FC = () => {
 
   return (
     <>
-      {/* 1. TELEMETRY MONITOR (DARK MODE) */}
+      {/* MONITOR TELEMETRY (GELAP TOTAL) */}
       <AnimatePresence>
         {isActive && (
           <motion.div
@@ -221,33 +246,33 @@ export const HandControl: React.FC = () => {
             exit={{ opacity: 0, x: -30 }}
             className="fixed bottom-6 left-6 z-[9999] pointer-events-none"
           >
-            <div className="bg-black/95 text-white text-[10px] px-4 py-2 rounded-t-2xl border-t border-x border-white/10 flex items-center justify-between">
+            <div className="bg-black text-white text-[9px] px-4 py-2 rounded-t-2xl border-t border-x border-white/10 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <div className={`w-1.5 h-1.5 rounded-full ${isHandVisible ? 'bg-mangka-secondary animate-pulse' : 'bg-red-500'}`} />
-                <span className="font-bold tracking-widest uppercase flex items-center gap-2">
-                  <Cpu size={12} /> Neural Engine
+                <div className={`w-1.5 h-1.5 rounded-full ${isHandVisible ? 'bg-mangka-secondary' : 'bg-red-600'}`} />
+                <span className="font-bold tracking-[0.2em] uppercase flex items-center gap-2">
+                  <Cpu size={11} /> Skeletal Engine
                 </span>
               </div>
-              <span className="text-white/40 font-mono tracking-tighter">fps: 60.0</span>
+              <span className="text-white/30 font-mono tracking-tighter">Relative: {isCalibrated.current ? 'On' : 'Off'}</span>
             </div>
-            <div className="w-56 aspect-video bg-black rounded-b-2xl border-b border-x border-white/10 overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] relative">
+            <div className="w-52 aspect-video bg-black rounded-b-2xl border-b border-x border-white/10 overflow-hidden shadow-[0_0_60px_rgba(0,0,0,0.8)] relative">
               <canvas ref={canvasRef} className="w-full h-full" width={480} height={360} />
-              <div className="absolute inset-0 border border-white/5 pointer-events-none" />
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* 2. LUXURY CURSOR */}
+      {/* LUXURY AI CURSOR */}
       <div 
         ref={cursorRef}
         className={`fixed top-0 left-0 w-16 h-16 -mt-8 -ml-8 pointer-events-none z-[10000] transition-opacity duration-500 ${isActive ? 'opacity-100' : 'opacity-0'}`}
       >
         <div className={`
           relative w-full h-full rounded-full border flex items-center justify-center transition-all duration-300
-          ${!isHandVisible ? 'scale-75 opacity-30 border-white/20' : 'scale-100 border-mangka-secondary bg-mangka-secondary/5 shadow-[0_0_25px_rgba(255,157,59,0.3)]'}
-          ${gestureMode === 'scroll-up' || gestureMode === 'scroll-down' ? 'border-blue-400 bg-blue-400/10 shadow-[0_0_30px_rgba(96,165,250,0.5)]' : ''}
-          ${isLeftPinching ? 'scale-90 border-white bg-white/30 shadow-[0_0_40px_white]' : ''}
+          ${!isHandVisible ? 'scale-75 opacity-20 border-white/20' : 'scale-100 border-mangka-secondary bg-mangka-secondary/5 shadow-[0_0_30px_rgba(255,157,59,0.4)]'}
+          ${gestureMode === 'reset' ? 'border-red-500 bg-red-500/10 scale-125 shadow-[0_0_40px_rgba(239,68,68,0.6)]' : ''}
+          ${gestureMode === 'scroll-up' || gestureMode === 'scroll-down' ? 'border-blue-400 bg-blue-400/10' : ''}
+          ${isLeftPinching ? 'scale-90 border-white bg-white/40 shadow-[0_0_50px_white]' : ''}
         `}>
           {/* Central Core */}
           <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${isHandVisible ? 'bg-mangka-secondary' : 'bg-white/20'}`} />
@@ -257,23 +282,23 @@ export const HandControl: React.FC = () => {
             {gestureMode === 'scroll-up' && <MoveUp size={24} className="text-blue-400 animate-bounce" />}
             {gestureMode === 'scroll-down' && <MoveDown size={24} className="text-blue-400 animate-bounce" />}
             {gestureMode === 'pointer' && isHandVisible && <MousePointer2 size={20} className={`${isLeftPinching ? 'text-white' : 'text-mangka-secondary'}`} />}
-            {gestureMode === 'reset' && <Target size={22} className="text-red-500" />}
+            {gestureMode === 'reset' && <Focus size={24} className="text-red-500 animate-pulse" />}
           </div>
 
-          {/* Radar Ripple Effect */}
-          {isHandVisible && (
+          {/* Precision Ring */}
+          {gestureMode === 'pointer' && isCalibrated.current && (
             <motion.div 
-              animate={{ scale: [1, 1.5], opacity: [0.3, 0] }}
-              transition={{ repeat: Infinity, duration: 1.5 }}
-              className="absolute inset-0 rounded-full border border-mangka-secondary/30"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              className="absolute -inset-2 border border-dashed border-mangka-secondary/20 rounded-full"
             />
           )}
         </div>
       </div>
 
-      {/* 3. FLOATING ACTION PANEL */}
+      {/* FLOATING ACTION PANEL */}
       <div className="fixed bottom-24 right-6 z-[9999] flex flex-col items-end gap-4 pointer-events-none">
-        <motion.div layout className="pointer-events-auto bg-white/80 backdrop-blur-3xl border border-white/40 p-3 rounded-[40px] shadow-2xl">
+        <motion.div layout className="pointer-events-auto bg-white/90 backdrop-blur-3xl border border-white/40 p-3 rounded-[40px] shadow-2xl">
           <video ref={videoRef} className="hidden" playsInline muted />
           <button
             onClick={toggleControl}
@@ -296,23 +321,23 @@ export const HandControl: React.FC = () => {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 20 }}
-              className="bg-black/95 text-white/90 text-[10px] p-6 rounded-[32px] border border-white/10 w-52 shadow-[0_20px_60px_rgba(0,0,0,0.4)]"
+              className="bg-black/95 text-white/90 text-[10px] p-6 rounded-[32px] border border-white/10 w-52 shadow-[0_20px_60px_rgba(0,0,0,0.5)]"
             >
               <div className="space-y-4">
-                <div className="flex items-center gap-2 text-mangka-secondary font-bold border-b border-white/5 pb-3 mb-2 tracking-widest uppercase">
-                  <Activity size={12} /> Neural Map
+                <div className="flex items-center gap-2 text-mangka-secondary font-bold border-b border-white/10 pb-3 mb-2 tracking-widest uppercase">
+                  <Activity size={12} /> Air-Mouse Guide
                 </div>
                 <div className="flex justify-between items-center text-white/50">
-                  <span>Pointer:</span> <span className="text-white bg-white/10 px-2 py-0.5 rounded">☝️ 1 Finger</span>
+                  <span className="font-bold text-red-400">✊ Fist:</span> <span className="text-white font-mono">Center / Reset</span>
                 </div>
                 <div className="flex justify-between items-center text-white/50">
-                  <span>Quick Click:</span> <span className="text-mangka-secondary font-bold">👌 Left Pinch</span>
+                  <span>Pointer:</span> <span className="text-white bg-white/10 px-2 py-0.5 rounded">☝️ Open After Fist</span>
                 </div>
                 <div className="flex justify-between items-center text-white/50">
                   <span>Hyper Scroll:</span> <span className="text-blue-400 font-bold">✌️/🤟 Fingers</span>
                 </div>
-                <div className="mt-4 pt-4 border-t border-white/5 text-[9px] text-center italic text-white/30">
-                  "Skeletal tracking active. No video data recorded."
+                <div className="mt-4 pt-4 border-t border-white/10 text-[9px] text-center italic text-white/30">
+                  "Genggam untuk memposisikan kursor di tengah layar."
                 </div>
               </div>
             </motion.div>
