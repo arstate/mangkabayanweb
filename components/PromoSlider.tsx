@@ -1,11 +1,10 @@
-
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SmartImage } from './ui/SmartImage';
 
 const banners = [
-  "https://lh3.googleusercontent.com/drive-storage/AJQWtBMQrSLXP0TXeNTlPTvdNcurY-uSU1gRzvHgTtJXayRRh_37SWID9c-kiFWu6RGvLSrbKwwigiRvoQEOlkMR7TpLWykAkpIQOkxnbQ=w800",
-  "https://lh3.googleusercontent.com/drive-storage/AJQWtBObcv3nAWY2IkgaazFutaW8X1PcyK_fHMGspr56ytcy2GMaNKuu_63lMWkK5-VJnfcjIcYsDX4pmScsIRkFaIDdDWQ3jYehOOdy8g=w800"
+  "https://lh3.googleusercontent.com/pw/AP1GczMXB-MhG-mSfHg-qZQzpRMX3LEy1ZxJHSvSe-Gyw9xSDGxSPHQMEE4BProAk0WDPhy-b73K9CKBYdfsjyJPwQfqXNIAEut6jnzHqTXeRW62VsER5r4=w2400",
+  "https://lh3.googleusercontent.com/pw/AP1GczMOxzyyGSmlXFTRen4-qtovBwVuIIOVrrNYAO8ISiBWwoBjP_PTmdVQhf0tiqsQBf5JVPeHvZsz_mld0FwfnkAPDNhojLB38IgKetU9mrEjl8Lsld8=w2400"
 ];
 
 const variants = {

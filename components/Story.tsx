@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
@@ -17,7 +16,7 @@ export const Story: React.FC = () => {
               </h2>
               <div className="w-20 h-1 bg-mangka-secondary rounded-full" />
               <p className="text-lg text-mangka-primary/80 leading-relaxed font-sans">
-                Bermula dari Cirebon, <strong>Mangkabayan</strong> hadir dengan visi mulia untuk melestarikan resep leluhur tanah Sunda. 
+                Bermula dari Cirebon, <strong>Mangkabayan</strong> hadir with visi mulia untuk melestarikan resep leluhur tanah Sunda. 
                 Kami percaya bahwa setiap hidangan bercerita tentang kehangatan keluarga.
               </p>
               <p className="text-lg text-mangka-primary/80 leading-relaxed font-sans">
@@ -38,13 +37,13 @@ export const Story: React.FC = () => {
             <div className="md:w-1/2 w-full">
               <div className="grid grid-cols-2 gap-4">
                 <SmartImage 
-                  src="https://lh3.googleusercontent.com/drive-storage/AJQWtBMFiTm4z8f1qYwq1z2S0T8xMHXKe0eZ3ZEHuyVbVbz6yLFzyxrkOelk13zsfrqyJtyjyaQ-aQB2k9xV8vDP7CD-1t8fkUOT8GXh0w=w800" 
-                  alt="Interior Restoran" 
+                  src="https://lh3.googleusercontent.com/pw/AP1GczOz5BJ8nKPSEevbOo9wrPFioeQYVVtOyJ8gepZGltjr1FThu95lzCIwYQAsWhk6DFV2SOImfgP0dUSYt65VGFic3WMwqQzE1zWmgBb7X2VlaIYXto4=w2400" 
+                  alt="Warisan Rasa 1" 
                   className="rounded-[32px] w-full h-64 object-cover transform translate-y-8" 
                 />
                 <SmartImage 
-                  src="https://lh3.googleusercontent.com/drive-storage/AJQWtBNqNWox-gJ5aRptZDP4-O-e1lmN0uJfrKvGXjtjQujK3L1J6WsQoxNRMF6s2U5Kv-ftoCMBLEuCseXwNg7_1rlQAZrhyTHbch34tw=w800" 
-                  alt="Suasana Makan" 
+                  src="https://lh3.googleusercontent.com/pw/AP1GczMuoJHQiWPIiV3bFNEIWHS_LsMOb6zdYN44eKv5hPEeLSNvSG8WaNkP3AzmiGqR0sKcj4LHv3sj4WixqxaRPEBeYPTJG-zBATHZVQqO2z6WqS1fwqs=w2400" 
+                  alt="Warisan Rasa 2" 
                   className="rounded-[32px] w-full h-64 object-cover" 
                 />
               </div>

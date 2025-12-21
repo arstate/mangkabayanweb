@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -99,7 +98,7 @@ export const Navbar: React.FC = () => {
           {/* Logo Section */}
           <Link to="/" onClick={(e) => isHomePage && window.scrollTo({top: 0, behavior: 'smooth'})} className="flex items-center z-20">
             <SmartImage 
-              src="https://lh3.googleusercontent.com/drive-storage/AJQWtBNQaB8jsAj2zl5FMhWL8LJ58OkJlfCalJpdzs1qzfUEYCCLu9xq2gZIthdPYRqqLcmaDaMj89WDxJRdMRi9JnytTIOdTYhIbtrm=w800" 
+              src="https://lh3.googleusercontent.com/pw/AP1GczPIvyCq__6gv17jAs3a9mlG2zitRs2RIV_iT_A6Kbdy0d2UifZ7c46xofFcdx6qTPSVqczqDJMH2miQGfb9MXk0OPJA0YFnBnqHoRQbGDPIOe8AHoQ=w2400" 
               alt="Mangkabayan Surabaya" 
               className="h-12 md:h-14 w-auto object-contain"
             />

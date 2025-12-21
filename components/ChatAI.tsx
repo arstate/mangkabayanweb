@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, X, Send, Sparkles } from 'lucide-react';
@@ -105,7 +104,7 @@ export const ChatAI: React.FC = () => {
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-inner overflow-hidden border border-white/50">
                    <SmartImage 
-                      src="https://lh3.googleusercontent.com/drive-storage/AJQWtBOqwPdVwVza5Hpej68hmgYEpyupx8h3zZUlYk81LNKnnl2-9_U_uTHx1tFSuM-s7OfpE6Cp0yNVO71htbt13XBhqVhQ27lQEXJzhQ=w200" 
+                      src="https://lh3.googleusercontent.com/pw/AP1GczOBZrDaNNLefC1q0tty73jfvBxgFbqteaw0PP6KZJwGPb1MNPGLKihXG1yxkxWoKPeIBLcKJ-kWcLXaa0T73Vfrl0y2ZjonMdpCLNPPbOiNLVdpkgg=w2400" 
                       alt="Logo Mangkabayan"
                       className="w-full h-full object-cover"
                    />

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { MapPin, Phone, Instagram, Mail } from 'lucide-react';
 import { SmartImage } from './ui/SmartImage';
@@ -13,7 +12,7 @@ export const Footer: React.FC = () => {
           <div className="space-y-6">
             <div>
               <SmartImage 
-                src="https://lh3.googleusercontent.com/drive-storage/AJQWtBNQaB8jsAj2zl5FMhWL8LJ58OkJlfCalJpdzs1qzfUEYCCLu9xq2gZIthdPYRqqLcmaDaMj89WDxJRdMRi9JnytTIOdTYhIbtrm=w800" 
+                src="https://lh3.googleusercontent.com/pw/AP1GczPIvyCq__6gv17jAs3a9mlG2zitRs2RIV_iT_A6Kbdy0d2UifZ7c46xofFcdx6qTPSVqczqDJMH2miQGfb9MXk0OPJA0YFnBnqHoRQbGDPIOe8AHoQ=w2400" 
                 alt="LOGO MANGKABAYAN NEW.png" 
                 width="800"
                 loading="lazy"

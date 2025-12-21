@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, CheckCircle, MapPin, Award, Users } from 'lucide-react';
@@ -85,15 +84,15 @@ export const AboutPage: React.FC = () => {
               </p>
            </GlassCard>
            
-           <GlassCard className="p-8 bg-white/60">
+           <GlassCard className="p-8 bg-white/80 border-mangka-secondary/20 shadow-xl">
               <h3 className="font-serif text-2xl font-bold text-mangka-primary mb-4 flex items-center gap-3">
                 <Users className="text-mangka-secondary" /> Nilai Kami
               </h3>
-              <ul className="space-y-3">
-                <li className="flex items-center gap-2 text-mangka-primary font-medium"><CheckCircle size={18} className="text-mangka-secondary" /> Rasa Otentik</li>
-                <li className="flex items-center gap-2 text-mangka-primary font-medium"><CheckCircle size={18} className="text-mangka-secondary" /> Pelayanan "Someah"</li>
-                <li className="flex items-center gap-2 text-mangka-primary font-medium"><CheckCircle size={18} className="text-mangka-secondary" /> Bahan Baku Segar</li>
-                <li className="flex items-center gap-2 text-mangka-primary font-medium"><CheckCircle size={18} className="text-mangka-secondary" /> Kebersihan Terjamin</li>
+              <ul className="space-y-4">
+                <li className="flex items-center gap-3 text-mangka-primary font-bold text-lg"><CheckCircle size={20} className="text-mangka-secondary shrink-0" /> Rasa Otentik</li>
+                <li className="flex items-center gap-3 text-mangka-primary font-bold text-lg"><CheckCircle size={20} className="text-mangka-secondary shrink-0" /> Pelayanan "Someah"</li>
+                <li className="flex items-center gap-3 text-mangka-primary font-bold text-lg"><CheckCircle size={20} className="text-mangka-secondary shrink-0" /> Bahan Baku Segar</li>
+                <li className="flex items-center gap-3 text-mangka-primary font-bold text-lg"><CheckCircle size={20} className="text-mangka-secondary shrink-0" /> Kebersihan Terjamin</li>
               </ul>
            </GlassCard>
         </div>
@@ -143,4 +142,3 @@ export const AboutPage: React.FC = () => {
     </div>
   );
 };
-    
