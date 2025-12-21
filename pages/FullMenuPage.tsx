@@ -33,11 +33,9 @@ const allMenus: MenuItem[] = [
   { id: 17, category: 'nasi_mie', name: "Mie Goreng", description: "Mie goreng jawa dengan sayuran dan suwiran ayam.", image: "https://lh3.googleusercontent.com/pw/AP1GczMexChmxZcrr5RfinAJhXLKW1BPhYgg6HO39nxuOW8Ezmbb93-vXNrsVE7fdjMH7OMXeHgotEzjRln0ELVkAIoG0w7tDkhCyR9kpVKLG1qmDCdSEco=w2400" },
 
   // Kategori: Sayuran & Tumisan
-  { id: 18, category: 'sayuran', name: "Kangkung Kriuk", description: "Daun kangkung digoreng tepung crispy, camilan sehat yang bikin nagih.", image: "https://images.unsplash.com/photo-1560155016-bd4879ae8f21?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" },
-  { id: 19, category: 'sayuran', name: "Kangkung Polos", description: "Tumis kangkung bawang putih yang simpel dan segar.", image: "https://images.unsplash.com/photo-1560155016-bd4879ae8f21?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" },
   { id: 20, category: 'sayuran', name: "Sayur Asem", description: "Kuah segar manis asam dengan jagung, labu siam, kacang panjang.", image: "https://lh3.googleusercontent.com/pw/AP1GczNZw1eVrLS1SrKW_M2iXFq6OVKNX_V6oMgkqWOuylUBFTdQ8dbCUDPZzOoJOt5K6CYVvrIjyHL9bUwFsKXcc2Trx5-WsMdcOiOBfCfHWgiqfml8kRo=w2400" },
   { id: 21, category: 'sayuran', name: "Karedok", description: "Salad sayur mentah khas Sunda dengan bumbu kacang kencur.", image: "https://lh3.googleusercontent.com/pw/AP1GczPsCa2_GaOHKZ1--rHcdgzotoXdEUmlZyERIDkG4wjRPpJSrJNl73ZDUlfpt48B2M2S4tfw-_nIIUpERqn4ylQetLQPkTDlHGbZ9XTz32MiUUir__M=w2400" },
-  { id: 22, category: 'sayuran', name: "Tumis Kangkung Balacan", description: "Kangkung tumis dengan terasi yang harum dan gurih.", image: "https://lh3.googleusercontent.com/pw/AP1GczP-xPp8KWopM_ueeUqVyVQzsAy49rdnTDjBsSxji8o2KClo8pK11U_xGrbjk6Op_CSXFnfwTQlyj8ifJ066LsmutMAWvx-yffZLlNL-i8S__6xUqZw=w2400" },
+  { id: 22, category: 'sayuran', name: "Tumis Kangkung Balacan", description: "Kangkung tumis dengan terasi yang harum and gurih.", image: "https://lh3.googleusercontent.com/pw/AP1GczP-xPp8KWopM_ueeUqVyVQzsAy49rdnTDjBsSxji8o2KClo8pK11U_xGrbjk6Op_CSXFnfwTQlyj8ifJ066LsmutMAWvx-yffZLlNL-i8S__6xUqZw=w2400" },
 
   // Kategori: Pepes & Tahu/Tempe
   { id: 23, category: 'pepes', name: "Pepes Jamur", description: "Jamur tiram berbumbu pepes dikukus dalam daun pisang.", image: "https://lh3.googleusercontent.com/pw/AP1GczO0edOiPtlZvuTfZXoBsUzEtkJkHGrTf8SW49nWdwO9sGc5-RsyfjZDZUf3mJ7ZD6G4xFuShWui2UK9yPLljXderK5_6eKiQIfBsEXfLushsNan7LA=w2400" },
@@ -46,7 +44,7 @@ const allMenus: MenuItem[] = [
 
   // Kategori: Sambal
   { id: 26, category: 'sambal', name: "Sambal Dadak Spc Mang Kabayan", description: "Sambal terasi segar yang diulek dadakan, pedas nendang.", image: "https://lh3.googleusercontent.com/pw/AP1GczPCWB8FjfjBDkaWBUPsor-NwcApSjjCPKKGyOIRkrRg6cszjyZg88c-gUCWhhOezeu4ImNGqZI2Ix2LSk3gePITKMiYmnRJRsxFbvgmbYbbnc8kW0k=w2400" },
-  { id: 27, category: 'sambal', name: "Sambal Mangga", description: "Sambal dengan irisan mangga muda yang asam segar.", image: "https://lh3.googleusercontent.com/pw/AP1GczPr0ovYz6_3PaQUwIOxSRr5_SZpa8hJso5cq_Bb8eAlqlrR_6WqQjVTYs6_MTPRnVYyMp76gxQHFDiy5zVDlpNBDs1ksRXlXSVmGMXDeFoBi7RTsM=w2400" },
+  { id: 27, category: 'sambal', name: "Sambal Mangga", description: "Sambal dengan irisan mangga muda yang asam segar.", image: "https://lh3.googleusercontent.com/pw/AP1GczPrx0ovYz6_3PaQUwIOxSRr5_SZpa8hJso5cq_Bb8eAlqlrR_6WqQjVTYs6_MTPRnVYyMp76gxQHFDiy5zVDlpNBDs1ksRXlXSVmGMXDeFoBi7RTsM=w2400" },
 
   // Kategori: Minuman
   { id: 28, category: 'minuman', name: "Es Special Mang Kabayan", description: "Campuran kelapa muda, alpukat, nangka, dengan sirup spesial.", image: "https://images.unsplash.com/photo-1556679343-c7306c1976bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", isRecommended: true },
