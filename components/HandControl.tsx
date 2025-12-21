@@ -34,7 +34,6 @@ export const HandControl: React.FC = () => {
   // Logic for Relative Tracking (Air Mouse Style)
   const isCalibrated = useRef(false);
   const handAnchor = useRef({ x: 0.5, y: 0.5 });
-  const screenCenter = useRef({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
 
   // LOOP UTAMA: Pergerakan Kursor & Scroll
   useEffect(() => {
@@ -148,9 +147,8 @@ export const HandControl: React.FC = () => {
             if (upFingers === 0) {
               setGestureMode('reset');
               scrollVelocity.current = 0;
-              isCalibrated.current = false; // Reset kalibrasi
+              isCalibrated.current = false; 
               
-              // Paksa kursor ke tengah secara instan
               targetPos.current = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
               currentPos.current = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
             } 
@@ -160,14 +158,11 @@ export const HandControl: React.FC = () => {
               setGestureMode('pointer');
               scrollVelocity.current = 0;
 
-              // Jika baru saja melepas genggaman, tentukan titik jangkar baru
               if (!isCalibrated.current) {
                 handAnchor.current = { x: currentHandX, y: currentHandY };
                 isCalibrated.current = true;
               }
 
-              // Hitung Offset dari tengah
-              // Gain 2.5 agar gerakan tangan kecil menghasilkan gerakan kursor besar (Luxury feel)
               const gain = 2.5;
               const offsetX = (currentHandX - handAnchor.current.x) * window.innerWidth * gain;
               const offsetY = (currentHandY - handAnchor.current.y) * window.innerHeight * gain;
@@ -188,7 +183,7 @@ export const HandControl: React.FC = () => {
             }
           }
 
-          // TANGAN KIRI: Logika Klik
+          // TANGAN KIRI: Logika Klik (FIXED)
           if (isLeftHand) {
             const thumbTip = landmarks[4];
             const indexTip = landmarks[8];
@@ -198,9 +193,21 @@ export const HandControl: React.FC = () => {
               setIsLeftPinching(true);
               if (!isClickProcessing.current) {
                 isClickProcessing.current = true;
-                const element = document.elementFromPoint(currentPos.current.x, currentPos.current.y);
-                if (element) (element as HTMLElement).click();
-                setTimeout(() => { isClickProcessing.current = false; }, 350);
+                
+                // Cari elemen di koordinat kursor
+                let element = document.elementFromPoint(currentPos.current.x, currentPos.current.y);
+                
+                // Traversal ke atas (bubbling) untuk mencari elemen yang bisa di-klik
+                // Ini menangani kasus klik pada icon (SVG/Path) yang tidak punya method .click()
+                while (element && typeof (element as any).click !== 'function') {
+                  element = element.parentElement;
+                }
+
+                if (element && typeof (element as any).click === 'function') {
+                  (element as any).click();
+                }
+
+                setTimeout(() => { isClickProcessing.current = false; }, 400);
               }
             } else {
               setIsLeftPinching(false);
