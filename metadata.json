@@ -1,5 +1,7 @@
 {
   "name": "Mangkabayan Surabaya",
-  "description": "Authentic Sundanese & Seafood Restaurant Landing Page featuring luxury glassmorphism design.",
-  "requestFramePermissions": []
+  "description": "Authentic Sundanese & Seafood Restaurant Landing Page featuring luxury hand gesture control.",
+  "requestFramePermissions": [
+    "camera"
+  ]
 }

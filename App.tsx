@@ -11,6 +11,7 @@ import { Footer } from './components/Footer';
 import { FullMenuPage } from './pages/FullMenuPage';
 import { AboutPage } from './pages/AboutPage';
 import { ChatAI } from './components/ChatAI';
+import { HandControl } from './components/HandControl';
 
 // Custom Easing Function: Ease-In-Out Cubic (Mulus & Mewah)
 const easeInOutCubic = (t: number): number => {
@@ -57,7 +58,6 @@ const Home = () => {
   useEffect(() => {
     const stopAutoScroll = () => {
       if (autoScrollRef.current) {
-        console.log("Auto-scroll dihentikan oleh pengguna.");
         autoScrollRef.current = false;
         if (timeoutIdRef.current) {
           clearTimeout(timeoutIdRef.current);
@@ -66,7 +66,6 @@ const Home = () => {
       }
     };
 
-    // Deteksi interaksi nyata
     const events = ['wheel', 'touchstart', 'mousedown', 'keydown', 'pointerdown'];
     events.forEach(event => window.addEventListener(event, stopAutoScroll, { passive: true }));
 
@@ -77,7 +76,6 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    // Memulai loop auto-scroll
     if (!location.hash && autoScrollRef.current) {
       const runSequence = (index: number) => {
         if (!autoScrollRef.current) return;
@@ -87,24 +85,22 @@ const Home = () => {
         const element = document.getElementById(targetId);
         
         if (element) {
-          // Gunakan perhitungan offset yang tetap stabil meski navbar berubah ukuran
           const headerOffset = 85; 
           const rect = element.getBoundingClientRect();
           const targetY = rect.top + window.pageYOffset - headerOffset;
 
-          smoothScrollTo(targetY, 2000); // 2 detik untuk kesan luxury yang tenang
+          smoothScrollTo(targetY, 2000);
 
           timeoutIdRef.current = window.setTimeout(() => {
             runSequence(currentIndex + 1);
-          }, 6000); // 6 detik jeda (memberi waktu 2 detik scroll + 4 detik baca)
+          }, 6000);
         } else {
           runSequence(currentIndex + 1);
         }
       };
 
-      // Delay awal agar Hero terlihat dulu
       timeoutIdRef.current = window.setTimeout(() => {
-        runSequence(1); // Ke 'story'
+        runSequence(1);
       }, 4000);
     }
   }, []);
@@ -158,6 +154,7 @@ function App() {
         </Routes>
 
         <ChatAI />
+        <HandControl />
       </main>
     </HashRouter>
   );
