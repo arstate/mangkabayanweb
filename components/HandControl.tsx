@@ -1,8 +1,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-// Added Hand to the imports from lucide-react
-import { MousePointer2, MoveUp, MoveDown, Activity, Zap, Cpu, Target, Hand } from 'lucide-react';
+import { MousePointer2, MoveUp, MoveDown, Activity, Zap, Cpu, Target, Hand, HelpCircle } from 'lucide-react';
 
 declare global {
   interface Window {
@@ -17,6 +16,7 @@ declare global {
 export const HandControl: React.FC = () => {
   const [isActive, setIsActive] = useState(false);
   const [gestureMode, setGestureMode] = useState<'pointer' | 'scroll-up' | 'scroll-down' | 'reset' | 'none'>('none');
+  const [isTracking, setIsTracking] = useState(false); // State baru untuk visual feedback saat tracking hilang
   const [isLeftPinching, setIsLeftPinching] = useState(false);
   
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -35,9 +35,13 @@ export const HandControl: React.FC = () => {
     let animationFrame: number;
     
     const updateUI = () => {
-      // Interpolasi untuk gerakan kursor yang mewah
-      lastPos.current.x += (targetPos.current.x - lastPos.current.x) * 0.2;
-      lastPos.current.y += (targetPos.current.y - lastPos.current.y) * 0.2;
+      // OPTIMASI LAG: Meningkatkan faktor interpolasi dari 0.2 ke 0.4
+      // Nilai lebih tinggi = respons lebih cepat (kurang delay), tapi sedikit lebih kasar.
+      // 0.4 adalah sweet spot antara smooth dan snappy.
+      const lerpFactor = 0.4; 
+      
+      lastPos.current.x += (targetPos.current.x - lastPos.current.x) * lerpFactor;
+      lastPos.current.y += (targetPos.current.y - lastPos.current.y) * lerpFactor;
 
       if (cursorRef.current) {
         cursorRef.current.style.transform = `translate3d(${lastPos.current.x}px, ${lastPos.current.y}px, 0)`;
@@ -64,6 +68,7 @@ export const HandControl: React.FC = () => {
       if (cameraRef.current) cameraRef.current.stop();
       setIsActive(false);
       setGestureMode('none');
+      setIsTracking(false);
       scrollVelocity.current = 0;
     }
   };
@@ -78,13 +83,14 @@ export const HandControl: React.FC = () => {
     hands.setOptions({
       maxNumHands: 2,
       modelComplexity: 0, // Lite mode for zero lag
-      minDetectionConfidence: 0.6,
-      minTrackingConfidence: 0.6,
+      minDetectionConfidence: 0.5, // Sedikit diturunkan agar lebih mudah mendeteksi tangan cepat
+      minTrackingConfidence: 0.5,
       selfieMode: true,
     });
 
     const onResults = (results: any) => {
-      const canvasCtx = canvasRef.current?.getContext('2d');
+      // Optimasi performa canvas readback
+      const canvasCtx = canvasRef.current?.getContext('2d', { willReadFrequently: true });
       if (!canvasCtx || !canvasRef.current) return;
 
       canvasCtx.save();
@@ -117,16 +123,18 @@ export const HandControl: React.FC = () => {
             // Deteksi jari yang terangkat
             const upFingers = tips.filter((tip, i) => tip.y < pips[i].y).length;
 
-            // 1. Mode Genggam (0 Jari): RESET
+            // 1. Mode Genggam (0 Jari): RESET KE TENGAH
             if (upFingers === 0) {
               setGestureMode('reset');
               scrollVelocity.current = 0;
+              // Force reset target ke tengah
               targetPos.current = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
             }
             // 2. Mode Pointer (1 Jari): MOVE
             else if (upFingers === 1) {
               setGestureMode('pointer');
               scrollVelocity.current = 0;
+              // Update target posisi normal
               targetPos.current = { 
                 x: landmarks[8].x * window.innerWidth, 
                 y: landmarks[8].y * window.innerHeight 
@@ -135,17 +143,31 @@ export const HandControl: React.FC = () => {
             // 3. Mode Scroll Up (2 Jari)
             else if (upFingers === 2) {
               setGestureMode('scroll-up');
-              scrollVelocity.current = -15; // Kecepatan ditingkatkan (Up)
+              scrollVelocity.current = -18; // Sedikit dipercepat
+              // Tetap update posisi X/Y kursor saat scroll agar tidak "tertinggal"
+              targetPos.current = { 
+                x: landmarks[8].x * window.innerWidth, 
+                y: landmarks[8].y * window.innerHeight 
+              };
             }
             // 4. Mode Scroll Down (3 Jari)
             else if (upFingers === 3) {
               setGestureMode('scroll-down');
-              scrollVelocity.current = 15; // Kecepatan ditingkatkan (Down)
+              scrollVelocity.current = 18; // Sedikit dipercepat
+              // Tetap update posisi X/Y kursor saat scroll
+              targetPos.current = { 
+                x: landmarks[8].x * window.innerWidth, 
+                y: landmarks[8].y * window.innerHeight 
+              };
             }
-            // Default (Lainnya)
             else {
-              setGestureMode('none');
-              scrollVelocity.current = 0;
+               // 4 atau 5 jari (Open Hand/Wave) -> Stop Scroll tapi Ikuti Tangan
+               setGestureMode('none');
+               scrollVelocity.current = 0;
+               targetPos.current = { 
+                x: landmarks[8].x * window.innerWidth, 
+                y: landmarks[8].y * window.innerHeight 
+              };
             }
           }
 
@@ -171,10 +193,18 @@ export const HandControl: React.FC = () => {
         });
       }
 
-      if (!rightHandFound) {
+      // Handling Lost Tracking
+      if (rightHandFound) {
+        if (!isTracking) setIsTracking(true);
+      } else {
+        // Jika tangan hilang, JANGAN reset posisi kursor. 
+        // Biarkan di lastPos. Hanya ubah status visual.
+        if (isTracking) setIsTracking(false);
+        
         setGestureMode('none');
         scrollVelocity.current = 0;
       }
+
       if (!leftHandFound) setIsLeftPinching(false);
 
       canvasCtx.restore();
@@ -197,7 +227,7 @@ export const HandControl: React.FC = () => {
       camera.stop();
       hands.close();
     };
-  }, [isActive]);
+  }, [isActive, isTracking]); // Add isTracking to dependency if needed inside, but purely logical refs don't need it. Kept for safety.
 
   return (
     <>
@@ -213,10 +243,12 @@ export const HandControl: React.FC = () => {
             <div className="bg-mangka-primary/95 text-white text-[9px] px-3 py-1.5 rounded-t-xl backdrop-blur-md flex items-center justify-between border border-white/10">
               <div className="flex items-center gap-2">
                 <Cpu size={10} className="text-green-400" />
-                <span className="font-bold tracking-widest uppercase">Mangkabayan AI v2</span>
+                <span className="font-bold tracking-widest uppercase">
+                  {isTracking ? "TRACKING ACTIVE" : "SEARCHING HAND..."}
+                </span>
               </div>
             </div>
-            <div className="w-44 aspect-video bg-black/80 rounded-b-xl border border-white/10 overflow-hidden shadow-2xl">
+            <div className={`w-44 aspect-video bg-black/80 rounded-b-xl border border-white/10 overflow-hidden shadow-2xl transition-colors duration-500 ${isTracking ? 'border-green-500/30' : 'border-red-500/30'}`}>
               <canvas ref={canvasRef} className="w-full h-full" width={480} height={360} />
             </div>
           </motion.div>
@@ -226,23 +258,26 @@ export const HandControl: React.FC = () => {
       {/* 2. DYNAMIC AI CURSOR */}
       <div 
         ref={cursorRef}
-        className={`fixed top-0 left-0 w-12 h-12 -mt-6 -ml-6 pointer-events-none z-[10000] transition-transform duration-75 ease-out ${isActive ? 'block' : 'hidden'}`}
+        className={`fixed top-0 left-0 w-12 h-12 -mt-6 -ml-6 pointer-events-none z-[10000] transition-opacity duration-300 ${isActive ? 'block' : 'hidden'} ${isTracking ? 'opacity-100' : 'opacity-40'}`}
       >
         <div className={`
-          w-full h-full rounded-full border-2 flex items-center justify-center backdrop-blur-sm transition-all duration-300
+          w-full h-full rounded-full border-2 flex items-center justify-center backdrop-blur-sm transition-all duration-200
           ${gestureMode === 'scroll-up' || gestureMode === 'scroll-down' ? 'border-blue-400 bg-blue-400/20 shadow-[0_0_15px_rgba(96,165,250,0.5)]' : 'border-mangka-secondary bg-mangka-secondary/10 shadow-xl'}
           ${gestureMode === 'reset' ? 'border-red-400 bg-red-400/20 scale-125' : ''}
           ${isLeftPinching ? 'scale-75 border-white bg-white/50 shadow-[0_0_20px_white]' : ''}
+          ${!isTracking ? 'border-gray-400 bg-gray-500/20 grayscale' : ''}
         `}>
-          {gestureMode === 'scroll-up' && <MoveUp size={20} className="text-blue-400 animate-bounce" />}
-          {gestureMode === 'scroll-down' && <MoveDown size={20} className="text-blue-400 animate-bounce" />}
-          {gestureMode === 'pointer' && <MousePointer2 size={20} className={`${isLeftPinching ? 'text-white' : 'text-mangka-secondary'}`} />}
-          {gestureMode === 'reset' && <Target size={20} className="text-red-400 rotate-45" />}
+          {!isTracking && <HelpCircle size={20} className="text-gray-400" />}
+          {isTracking && gestureMode === 'scroll-up' && <MoveUp size={20} className="text-blue-400 animate-bounce" />}
+          {isTracking && gestureMode === 'scroll-down' && <MoveDown size={20} className="text-blue-400 animate-bounce" />}
+          {isTracking && gestureMode === 'pointer' && <MousePointer2 size={20} className={`${isLeftPinching ? 'text-white' : 'text-mangka-secondary'}`} />}
+          {isTracking && gestureMode === 'reset' && <Target size={20} className="text-red-400 rotate-45" />}
+          {isTracking && gestureMode === 'none' && <MousePointer2 size={20} className="text-mangka-secondary opacity-50" />}
         </div>
         
         {/* Click Pulse */}
         <AnimatePresence>
-          {isLeftPinching && (
+          {isLeftPinching && isTracking && (
             <motion.div 
               initial={{ scale: 0.5, opacity: 1 }}
               animate={{ scale: 3, opacity: 0 }}
