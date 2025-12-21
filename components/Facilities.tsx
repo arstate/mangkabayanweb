@@ -6,7 +6,7 @@ import { Facility } from '../types';
 const facilities: Facility[] = [
   {
     id: 1,
-    title: "Meeting Room",
+    title: "Ruang Meeting",
     icon: "https://lh3.googleusercontent.com/pw/AP1GczO6kHj8XHin8SxqcpyAymckeV4lvo34-aSZ7QR-1QWzLWbUS-FYRnl_VLrlx1TM9-bZzyKXlDI8hT_DivQrsTYhsXU6-LpXUgUukW8mGnJcsFZm1ko=w2400",
     description: "Ruang privat ber-AC untuk meeting atau acara keluarga intim."
   },
