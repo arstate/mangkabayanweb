@@ -6,16 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mangkabayan Surabaya - Khas Sunda & Hidangan Laut</title>
     
-    <!-- Favicon & Link Preview (Proxied for reliability) -->
+    <!-- MediaPipe Libraries for Hand Tracking -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+
+    <!-- Favicon & Link Preview -->
     <link rel="icon" href="https://wsrv.nl/?url=https://lh3.googleusercontent.com/pw/AP1GczOBZrDaNNLefC1q0tty73jfvBxgFbqteaw0PP6KZJwGPb1MNPGLKihXG1yxkxWoKPeIBLcKJ-kWcLXaa0T73Vfrl0y2ZjonMdpCLNPPbOiNLVdpkgg=w2400&output=png" />
     <meta property="og:image" content="https://wsrv.nl/?url=https://lh3.googleusercontent.com/pw/AP1GczOBZrDaNNLefC1q0tty73jfvBxgFbqteaw0PP6KZJwGPb1MNPGLKihXG1yxkxWoKPeIBLcKJ-kWcLXaa0T73Vfrl0y2ZjonMdpCLNPPbOiNLVdpkgg=w2400&output=png" />
     
-    <!-- Fonts: Playfair Display (Headings) & Lato (Body) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -23,9 +26,9 @@
           extend: {
             colors: {
               mangka: {
-                primary: '#3F1307', // Dark Brown (Text/Footer)
-                secondary: '#FF9D3B', // Fresh Orange (Buttons/Accents)
-                bg: '#F5F5F5', // Light Beige (Background)
+                primary: '#3F1307',
+                secondary: '#FF9D3B',
+                bg: '#F5F5F5',
               }
             },
             fontFamily: {
@@ -33,32 +36,21 @@
               sans: ['Lato', 'sans-serif'],
             },
             borderRadius: {
-              'glass': '40px', // Super rounded for glass cards
+              'glass': '40px',
             }
           }
         }
       }
     </script>
     <style>
-      /* Custom Scrollbar for a premium feel */
-      ::-webkit-scrollbar {
-        width: 10px;
-      }
-      ::-webkit-scrollbar-track {
-        background: #F5F5F5;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #3F1307;
-        border-radius: 5px;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #FF9D3B;
-      }
+      ::-webkit-scrollbar { width: 10px; }
+      ::-webkit-scrollbar-track { background: #F5F5F5; }
+      ::-webkit-scrollbar-thumb { background: #3F1307; border-radius: 5px; }
+      ::-webkit-scrollbar-thumb:hover { background: #FF9D3B; }
+      html { scroll-behavior: auto !important; }
       
-      /* PENTING: scroll-behavior: smooth dihapus untuk menghindari konflik dengan JS easing */
-      html {
-        scroll-behavior: auto !important;
-      }
+      /* Mirror video for more natural control */
+      .mirror { transform: scaleX(-1); }
     </style>
 <script type="importmap">
 {
