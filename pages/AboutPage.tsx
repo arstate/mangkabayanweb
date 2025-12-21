@@ -66,7 +66,7 @@ export const AboutPage: React.FC = () => {
           <div className="relative h-[500px]">
              <div className="absolute top-0 right-0 w-3/4 h-3/4 bg-orange-200 rounded-[40px] rotate-3 z-0"></div>
              <SmartImage 
-               src="https://lh3.googleusercontent.com/drive-storage/AJQWtBNP15_A7aEmXe56Yz4CrTyTNvvc-i2qiSdC-JMtitqcBx4HFC3oRjyhsP7-q_ToHGXWNwCAVbofrU1SOqFr6p3zM_7xZi0-dqryJw=w1300"
+               src="https://lh3.googleusercontent.com/pw/AP1GczOz5BJ8nKPSEevbOo9wrPFioeQYVVtOyJ8gepZGltjr1FThu95lzCIwYQAsWhk6DFV2SOImfgP0dUSYt65VGFic3WMwqQzE1zWmgBb7X2VlaIYXto4=w2400"
                className="absolute inset-4 w-full h-full object-cover rounded-[32px] shadow-xl z-10"
                alt="Sejarah Mangkabayan"
              />
@@ -97,17 +97,38 @@ export const AboutPage: React.FC = () => {
            </GlassCard>
         </div>
 
+        {/* Location Maps Section */}
+        <div className="mb-20">
+           <div className="text-center mb-10">
+              <h2 className="font-serif text-3xl font-bold text-mangka-primary mb-3">Lokasi Kami</h2>
+              <p className="text-mangka-primary/70">Kunjungi kami untuk pengalaman kuliner Sunda terbaik di Surabaya.</p>
+           </div>
+           <GlassCard className="p-0 overflow-hidden shadow-2xl border-none">
+              <div className="relative w-full aspect-video">
+                 <iframe 
+                   className="absolute inset-0 w-full h-full"
+                   frameBorder="0" 
+                   scrolling="no" 
+                   marginHeight={0} 
+                   marginWidth={0} 
+                   src="https://maps.google.com/maps?width=100%25&height=600&hl=en&q=mangkabayan%20surabaya&t=&z=14&ie=UTF8&iwloc=B&output=embed"
+                   title="Mangkabayan Surabaya Location"
+                 />
+              </div>
+           </GlassCard>
+        </div>
+
         {/* Gallery Section */}
         <div className="mb-20">
            <div className="text-center mb-10">
-              <h2 className="font-serif text-3xl font-bold text-mangka-primary mb-3">Galeri Momen</h2>
+              <h2 className="font-serif text-3xl font-bold text-mangka-primary mb-3">Galeri Mangkabayan</h2>
               <p className="text-mangka-primary/70">Kenangan indah bersama pelanggan setia kami.</p>
            </div>
            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <SmartImage src="https://picsum.photos/600/600?random=20" className="w-full h-64 object-cover rounded-2xl hover:scale-105 transition-transform duration-500" alt="Gallery 1" />
-              <SmartImage src="https://picsum.photos/600/600?random=21" className="w-full h-64 object-cover rounded-2xl hover:scale-105 transition-transform duration-500 md:translate-y-8" alt="Gallery 2" />
-              <SmartImage src="https://picsum.photos/600/600?random=22" className="w-full h-64 object-cover rounded-2xl hover:scale-105 transition-transform duration-500" alt="Gallery 3" />
-              <SmartImage src="https://picsum.photos/600/600?random=23" className="w-full h-64 object-cover rounded-2xl hover:scale-105 transition-transform duration-500 md:translate-y-8" alt="Gallery 4" />
+              <SmartImage src="https://lh3.googleusercontent.com/pw/AP1GczN1r2EyV4ogMUXS2EZuq106WlGAcQpvH6mP3UyXV2DPm6u4BmeRGjXavr_pxQrLnnLsnXonHzNydzIZGiFoal5L3OX_xRjR1HlaAxJHDWkLWJFY6EQ=w2400" className="w-full h-64 object-cover rounded-2xl hover:scale-105 transition-transform duration-500" alt="Gallery 1" />
+              <SmartImage src="https://lh3.googleusercontent.com/pw/AP1GczPYoCT2EoNIw31Zvk41h2BSf55fpOCrLQV2-pgYnUeuinGgNKRISqqRs0hJK56EgPdxrWNesBZp8G44q9kzmPau0WP0SHyZOzlHpMwvpRH5pK2ZtHU=w2400" className="w-full h-64 object-cover rounded-2xl hover:scale-105 transition-transform duration-500 md:translate-y-8" alt="Gallery 2" />
+              <SmartImage src="https://lh3.googleusercontent.com/pw/AP1GczO57e3S3uNmAo4G5Dm4xqF9P4KrWIpFr1fjIu8VEHckqto2aEi6B8PbsIF-gihQ7bo5ZgX-zk85ymMQXBhxN141cwlKTDZ1rXPg3eEpEsZCYhIryNw=w2400" className="w-full h-64 object-cover rounded-2xl hover:scale-105 transition-transform duration-500" alt="Gallery 3" />
+              <SmartImage src="https://lh3.googleusercontent.com/pw/AP1GczMOm6a_LngQ-GCgBs3R5UqRztxM5o146ZmjKN4PiKCIXL2gjy46OxHYhlVx8P4sTk1KFI-hRZzx-2Dt4SPBJXyYWGO0qCkVo5TfXhJp--gY4NNa9eA=w2400" className="w-full h-64 object-cover rounded-2xl hover:scale-105 transition-transform duration-500 md:translate-y-8" alt="Gallery 4" />
            </div>
         </div>
 
