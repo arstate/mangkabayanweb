@@ -10,7 +10,7 @@ const featuredMenu: MenuItem[] = [
     id: 1,
     name: "Gurame Bakar",
     description: "Gurame bakar dengan bumbu kecap manis spesial yang meresap sempurna.",
-    image: "https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    image: "https://lh3.googleusercontent.com/pw/AP1GczNhuihksdB5fIAs0x8V0D3HrqzK53wcDwEIOVnaGrtAZBNZBChZS__DsCJqenscscEvMkM1_QF20AvIq9r1-3q8BWNWq0F2C-Y62zV7-_IdYwJ4c4Q=w2400",
     isRecommended: true
   },
   {
@@ -24,7 +24,7 @@ const featuredMenu: MenuItem[] = [
     id: 3,
     name: "Udang Bakar Madu",
     description: "Udang pilihan dibakar dengan olesan madu murni.",
-    image: "https://images.unsplash.com/photo-1625938145744-e38051524294?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    image: "https://lh3.googleusercontent.com/pw/AP1GczMWw5jls-2xIC27M-MosbnLcFUAx_MmLwAIQlqMj-aier2KtHqaDqNbirg5OQf3cU8C9JKQqM_RDGgyUOckTDhSsJ7Jp2A5wlMZntynjrj4XW2Xm9U=w2400",
   },
   {
     id: 4,
