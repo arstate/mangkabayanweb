@@ -1,3 +1,4 @@
+
 import { LucideIcon } from 'lucide-react';
 
 export interface MenuItem {
@@ -13,7 +14,7 @@ export interface MenuItem {
 export interface Facility {
   id: number;
   title: string;
-  icon: LucideIcon;
+  icon: LucideIcon | string;
   description: string;
 }
 
