@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { GlassCard } from './ui/GlassCard';
@@ -18,7 +17,7 @@ const featuredMenu: MenuItem[] = [
     id: 2,
     name: "Nasi Liwet Kastrol",
     description: "Nasi timbel bungkus daun pisang dengan lauk lengkap.",
-    image: "https://lh3.googleusercontent.com/drive-storage/AJQWtBOMztMxWg891dALLylvHZPWw_rgtug-Bs7GpwZdWcwCzp2NytYXrrklSCJG9QwIq8EZtTkaksgxdwMWSzD1mCfFDEzpz2LpHJpAxQ=w800",
+    image: "https://lh3.googleusercontent.com/pw/AP1GczPdXv52j621XoHlgC0205DW_kTt3To_Q5kaEGVfkH95H61wcRghUbLPBjWvFaS4Ybeoou_yaoyYrBYvlkKPzL8elJTX_u64l5ZbEZMHsqFi4hTWL-I=w2400",
     isRecommended: true
   },
   {
@@ -31,7 +30,7 @@ const featuredMenu: MenuItem[] = [
     id: 4,
     name: "Sayur Asem",
     description: "Kuah segar manis asam dengan jagung dan labu siam.",
-    image: "https://lh3.googleusercontent.com/drive-storage/AJQWtBMAGd-zOSdtsVKR_cLyAnnLK2_KLh9f5mWW_mHq1J4bJ6irdYICzP87VdcaZC8q6XqoRCqtr8uJLG6Yt2RSYYJdXPCpb2b6I547PQ=w800",
+    image: "https://lh3.googleusercontent.com/pw/AP1GczNZw1eVrLS1SrKW_M2iXFq6OVKNX_V6oMgkqWOuylUBFTdQ8dbCUDPZzOoJOt5K6CYVvrIjyHL9bUwFsKXcc2Trx5-WsMdcOiOBfCfHWgiqfml8kRo=w2400",
   }
 ];
 
