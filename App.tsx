@@ -66,11 +66,20 @@ const Home = () => {
       }
     };
 
+    // Listener baru untuk menangkap status Hand Tracker
+    const handleTrackerStatus = (e: any) => {
+      if (e.detail?.active) {
+        stopAutoScroll();
+      }
+    };
+
     const events = ['wheel', 'touchstart', 'mousedown', 'keydown', 'pointerdown'];
     events.forEach(event => window.addEventListener(event, stopAutoScroll, { passive: true }));
+    window.addEventListener('handTrackerToggled', handleTrackerStatus);
 
     return () => {
       events.forEach(event => window.removeEventListener(event, stopAutoScroll));
+      window.removeEventListener('handTrackerToggled', handleTrackerStatus);
       if (timeoutIdRef.current) clearTimeout(timeoutIdRef.current);
     };
   }, []);
