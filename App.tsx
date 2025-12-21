@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { HashRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
@@ -11,26 +12,34 @@ import { FullMenuPage } from './pages/FullMenuPage';
 import { AboutPage } from './pages/AboutPage';
 import { ChatAI } from './components/ChatAI';
 
-// Custom Easing Function: Ease-In-Out Cubic untuk sensasi scrolling yang mewah
+// Custom Easing Function: Ease-In-Out Cubic (Mulus & Mewah)
 const easeInOutCubic = (t: number): number => {
   return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 };
 
-// Fungsi Smooth Scroll Custom dengan requestAnimationFrame
-const smoothScrollTo = (targetY: number, duration: number = 1500) => {
+// Global variabel untuk melacak jika ada scroll yang sedang berjalan
+let isScrolling = false;
+
+const smoothScrollTo = (targetY: number, duration: number = 1800) => {
+  if (isScrolling) return; // Cegah double trigger
+  
+  isScrolling = true;
   const startY = window.pageYOffset;
   const difference = targetY - startY;
   let startTime: number | null = null;
 
   const step = (currentTime: number) => {
     if (!startTime) startTime = currentTime;
-    const progress = Math.min((currentTime - startTime) / duration, 1);
-    const easedProgress = easeInOutCubic(progress);
+    const timeElapsed = currentTime - startTime;
+    const progress = Math.min(timeElapsed / duration, 1);
     
-    window.scrollTo(0, startY + difference * easedProgress);
+    const easedProgress = easeInOutCubic(progress);
+    window.scrollTo(0, startY + (difference * easedProgress));
 
-    if (progress < 1) {
+    if (timeElapsed < duration) {
       window.requestAnimationFrame(step);
+    } else {
+      isScrolling = false;
     }
   };
 
@@ -42,14 +51,13 @@ const Home = () => {
   const autoScrollRef = useRef<boolean>(true);
   const timeoutIdRef = useRef<number | null>(null);
   
-  // Urutan navigasi otomatis: Beranda -> Tentang Kami -> Menu -> Fasilitas (Lokasi dikecualikan)
+  // Urutan navigasi otomatis (Looping)
   const sections = ['home', 'story', 'menu', 'facilities'];
 
   useEffect(() => {
-    // Matikan fitur auto-scroll jika ada interaksi manual dari user
     const stopAutoScroll = () => {
       if (autoScrollRef.current) {
-        console.log("Auto-scroll dihentikan oleh interaksi pengguna.");
+        console.log("Auto-scroll dihentikan oleh pengguna.");
         autoScrollRef.current = false;
         if (timeoutIdRef.current) {
           clearTimeout(timeoutIdRef.current);
@@ -58,6 +66,7 @@ const Home = () => {
       }
     };
 
+    // Deteksi interaksi nyata
     const events = ['wheel', 'touchstart', 'mousedown', 'keydown', 'pointerdown'];
     events.forEach(event => window.addEventListener(event, stopAutoScroll, { passive: true }));
 
@@ -68,42 +77,38 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    // Memulai urutan scrolling otomatis hanya pada load pertama di halaman root (/)
+    // Memulai loop auto-scroll
     if (!location.hash && autoScrollRef.current) {
       const runSequence = (index: number) => {
         if (!autoScrollRef.current) return;
 
-        // Gunakan Modulo agar setelah 'facilities' kembali ke 'home'
         const currentIndex = index % sections.length;
         const targetId = sections[currentIndex];
         const element = document.getElementById(targetId);
         
         if (element) {
-          const headerOffset = 90;
-          const elementPosition = element.getBoundingClientRect().top;
-          const targetY = elementPosition + window.pageYOffset - headerOffset;
+          // Gunakan perhitungan offset yang tetap stabil meski navbar berubah ukuran
+          const headerOffset = 85; 
+          const rect = element.getBoundingClientRect();
+          const targetY = rect.top + window.pageYOffset - headerOffset;
 
-          // Eksekusi scroll mulus
-          smoothScrollTo(targetY, 1800);
+          smoothScrollTo(targetY, 2000); // 2 detik untuk kesan luxury yang tenang
 
-          // Jeda 5 detik di setiap section sebelum pindah ke berikutnya
           timeoutIdRef.current = window.setTimeout(() => {
             runSequence(currentIndex + 1);
-          }, 5000);
+          }, 6000); // 6 detik jeda (memberi waktu 2 detik scroll + 4 detik baca)
         } else {
-          // Jika element tidak ditemukan (fallback), langsung lanjut ke index berikutnya
           runSequence(currentIndex + 1);
         }
       };
 
-      // Delay awal 3 detik setelah web dimuat untuk memberikan waktu user melihat Hero section pertama kali
+      // Delay awal agar Hero terlihat dulu
       timeoutIdRef.current = window.setTimeout(() => {
-        runSequence(1); // Index 1 adalah 'story' (Tentang Kami)
-      }, 3000);
+        runSequence(1); // Ke 'story'
+      }, 4000);
     }
   }, []);
 
-  // Memastikan klik manual pada Navbar tetap halus dan menghentikan auto-scroll
   useEffect(() => {
     if (location.hash) {
       autoScrollRef.current = false;
@@ -113,8 +118,8 @@ const Home = () => {
         const element = document.getElementById(targetId);
         if (element) {
           const headerOffset = 100;
-          const elementPosition = element.getBoundingClientRect().top;
-          const targetY = elementPosition + window.pageYOffset - headerOffset;
+          const rect = element.getBoundingClientRect();
+          const targetY = rect.top + window.pageYOffset - headerOffset;
           smoothScrollTo(targetY, 1500);
         }
       }, 100);
@@ -137,7 +142,6 @@ function App() {
   return (
     <HashRouter>
       <main className="relative bg-[#F5F5F5] min-h-screen">
-        {/* Background Pattern */}
         <div 
           className="fixed inset-0 pointer-events-none opacity-[0.03] z-0"
           style={{
