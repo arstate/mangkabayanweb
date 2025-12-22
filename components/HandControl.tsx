@@ -20,7 +20,7 @@ export const HandControl: React.FC = () => {
   const [isHandVisible, setIsHandVisible] = useState(false);
   
   const videoRef = useRef<HTMLVideoElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null); // Tetap dibutuhkan untuk pemrosesan internal
+  const canvasRef = useRef<HTMLCanvasElement>(null); 
   const cursorRef = useRef<HTMLDivElement>(null);
   const handsRef = useRef<any>(null);
   const cameraRef = useRef<any>(null);
@@ -65,7 +65,6 @@ export const HandControl: React.FC = () => {
     const nextState = !isActive;
     setIsActive(nextState);
 
-    // Dispatch event untuk mematikan auto-scroll di App.tsx
     window.dispatchEvent(new CustomEvent('handTrackerToggled', { 
       detail: { active: nextState } 
     }));
@@ -95,7 +94,6 @@ export const HandControl: React.FC = () => {
     });
 
     const onResults = (results: any) => {
-      // Pemrosesan canvas dilakukan di latar belakang (tidak dirender ke UI)
       const canvasCtx = canvasRef.current?.getContext('2d');
       if (!canvasCtx || !canvasRef.current) return;
 
@@ -202,7 +200,6 @@ export const HandControl: React.FC = () => {
 
   return (
     <>
-      {/* HIDDEN BACKGROUND PROCESSORS */}
       <video ref={videoRef} className="hidden" playsInline muted />
       <canvas ref={canvasRef} className="hidden" width={480} height={360} />
 
@@ -235,10 +232,9 @@ export const HandControl: React.FC = () => {
         </div>
       </div>
 
-      {/* FLOATING ACTION PANEL (MOVED TO LEFT) */}
+      {/* FLOATING ACTION PANEL */}
       <div className="fixed bottom-6 left-6 z-[9999] flex flex-col items-start gap-4 pointer-events-none">
         
-        {/* ELEGANT LEGEND (RE-POSITIONED) */}
         <AnimatePresence>
           {isActive && (
             <motion.div
@@ -265,7 +261,7 @@ export const HandControl: React.FC = () => {
           )}
         </AnimatePresence>
 
-        <motion.div layout className="pointer-events-auto bg-white/90 backdrop-blur-3xl border border-white/40 p-3 rounded-[40px] shadow-2xl">
+        <div className="pointer-events-auto bg-white/90 backdrop-blur-3xl border border-white/40 p-3 rounded-[40px] shadow-2xl">
           <button
             onClick={toggleControl}
             className={`
@@ -278,7 +274,7 @@ export const HandControl: React.FC = () => {
               {isActive ? 'Stop' : 'Hand'}
             </span>
           </button>
-        </motion.div>
+        </div>
       </div>
     </>
   );
