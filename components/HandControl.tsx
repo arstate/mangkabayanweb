@@ -142,10 +142,12 @@ export const HandControl: React.FC = () => {
             } 
             else if (upFingers === 2) {
               setGestureMode('scroll-up');
-              scrollVelocity.current = -75;
+              // Dimodifikasi: Diperlambat dari 75 menjadi 15 untuk kenyamanan UX
+              scrollVelocity.current = -15;
             } else if (upFingers >= 3) {
               setGestureMode('scroll-down');
-              scrollVelocity.current = 75;
+              // Dimodifikasi: Diperlambat dari 75 menjadi 15 untuk kenyamanan UX
+              scrollVelocity.current = 15;
             }
           }
 
