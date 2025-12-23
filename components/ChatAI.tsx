@@ -49,9 +49,16 @@ export const ChatAI: React.FC = () => {
     setIsLoading(true);
 
     try {
-      // Inisialisasi SDK dengan API Key dari environment
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      // Inisialisasi API Key dari process.env.API_KEY yang sudah diset di Vercel
+      const apiKey = process.env.API_KEY;
       
+      if (!apiKey) {
+        throw new Error("API Key tidak ditemukan. Pastikan sudah diset di Vercel Environment Variables.");
+      }
+
+      const ai = new GoogleGenAI({ apiKey });
+      
+      // Menggunakan model gemini-3-flash-preview untuk performa terbaik
       const response = await ai.models.generateContent({
         model: 'gemini-3-flash-preview',
         contents: [{ role: 'user', parts: [{ text: userMsg }] }],
@@ -66,13 +73,13 @@ export const ChatAI: React.FC = () => {
       if (text) {
         setMessages(prev => [...prev, { role: 'model', text }]);
       } else {
-        throw new Error("Empty response from AI");
+        throw new Error("Respon AI kosong");
       }
     } catch (error) {
       console.error("Chat Error:", error);
       setMessages(prev => [...prev, { 
         role: 'model', 
-        text: 'Hampura, Mang Asisten sedang mengalami sedikit kendala teknis. Silakan hubungi WhatsApp kami di 0811-3531-888 untuk bantuan langsung atau reservasi.' 
+        text: 'Hampura, Mang Asisten sedang mengalami sedikit kendala teknis. Silakan hubungi WhatsApp kami di 0811-3531-888 untuk reservasi langsung.' 
       }]);
     } finally {
       setIsLoading(false);
@@ -107,7 +114,7 @@ export const ChatAI: React.FC = () => {
                   <h3 className="font-serif font-bold text-mangka-primary leading-tight">Mang Asisten</h3>
                   <div className="flex items-center gap-1.5">
                     <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
-                    <span className="text-[10px] text-mangka-primary/50 font-bold tracking-wider uppercase">Siap Melayani</span>
+                    <span className="text-[10px] text-mangka-primary/50 font-bold tracking-wider uppercase">Online</span>
                   </div>
                 </div>
               </div>
@@ -142,7 +149,7 @@ export const ChatAI: React.FC = () => {
                 <div className="flex justify-start">
                   <div className="bg-white/40 backdrop-blur-sm p-3 rounded-2xl rounded-tl-none border border-white/60 flex items-center gap-2">
                     <Loader2 size={14} className="animate-spin text-mangka-secondary" />
-                    <span className="text-[11px] text-mangka-primary/60 italic">Mang Asisten sedang mengetik...</span>
+                    <span className="text-[11px] text-mangka-primary/60 italic">Mang Asisten sedang memproses...</span>
                   </div>
                 </div>
               )}
@@ -157,7 +164,7 @@ export const ChatAI: React.FC = () => {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                  placeholder="Tanya Mang Asisten..."
+                  placeholder="Ketik pesan..."
                   className="flex-1 bg-transparent border-none outline-none text-sm text-mangka-primary placeholder:text-mangka-primary/30"
                 />
                 <button 
@@ -174,7 +181,7 @@ export const ChatAI: React.FC = () => {
                 </button>
               </div>
               <p className="text-center text-[9px] text-mangka-primary/30 mt-3 font-bold uppercase tracking-widest">
-                Didukung oleh Gemini AI • Mang Asisten v2.6
+                Protected by Gemini AI • Mang Asisten v3.0
               </p>
             </div>
           </motion.div>
@@ -186,7 +193,6 @@ export const ChatAI: React.FC = () => {
             whileTap={{ scale: 0.95 }}
             className="pointer-events-auto relative flex items-center justify-center group"
           >
-            {/* Ambient Glow */}
             <div className="absolute inset-0 bg-mangka-secondary/30 rounded-full blur-2xl group-hover:bg-mangka-secondary/50 transition-all"></div>
             
             <div className="relative w-18 h-18 md:w-20 md:h-20 flex items-center justify-center rounded-full bg-white/30 backdrop-blur-xl border border-white/50 shadow-2xl">
@@ -195,13 +201,12 @@ export const ChatAI: React.FC = () => {
                </div>
             </div>
 
-            {/* Hint Badge */}
             <motion.div 
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               className="absolute right-full mr-4 bg-white/90 backdrop-blur-lg px-4 py-2 rounded-2xl shadow-xl border border-white/50 whitespace-nowrap text-xs font-bold text-mangka-primary pointer-events-none hidden md:block"
             >
-              Ada yang bisa Mang bantu? 👋
+              Tanya Mang Asisten? 👋
             </motion.div>
           </motion.button>
         )}
