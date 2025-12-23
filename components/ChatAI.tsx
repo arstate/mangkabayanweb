@@ -1,7 +1,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, X, Send, Sparkles, Loader2 } from 'lucide-react';
+import { MessageCircle, X, Send, Loader2 } from 'lucide-react';
 import { GoogleGenAI } from "@google/genai";
 import { SmartImage } from './ui/SmartImage';
 
@@ -20,18 +20,6 @@ Informasi penting untuk Anda:
 - Kontak Reservasi: WhatsApp 0811-3531-888.
 `;
 
-// Daftar API Keys untuk rotasi jika salah satu gagal
-const API_KEYS = [
-  process.env.API_KEY, // Mencoba key dari env dulu
-  "AIzaSyCHVn95FnGTPtxMRRBXa_cHCteJKv3KGiY",
-  "AIzaSyDYJVMP0Pue7vodzWBeX0I06PgzYFoPJy8",
-  "AIzaSyB-ZDRLEvwxly7WOdX11n_u5d34wdqpxIw",
-  "AIzaSyDsJOd0dUNYwcIKOUdt1KBGdTwM7J7QQ1k",
-  "AIzaSyCBpztyFBeolgyAM_ZXQcsO0NSpwsuh1xM",
-  "AIzaSyD2mp7DPiHU_zXZdnK3nLsl1bsJTE7VdyY",
-  "AIzaSyC8TAGHcxgKV7MxpevwitVzaJ3WjVp-RLI"
-].filter(Boolean) as string[];
-
 interface Message {
   role: 'user' | 'model';
   text: string;
@@ -44,11 +32,12 @@ export const ChatAI: React.FC = () => {
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [activeKeyIndex, setActiveKeyIndex] = useState(0);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (isOpen) {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }
   }, [messages, isOpen, isLoading]);
 
   const handleSend = async () => {
@@ -59,44 +48,35 @@ export const ChatAI: React.FC = () => {
     setMessages(prev => [...prev, { role: 'user', text: userMsg }]);
     setIsLoading(true);
 
-    let success = false;
-    let attempts = 0;
-    let keyIdx = activeKeyIndex;
-
-    // Loop rotasi API Key jika terjadi kegagalan
-    while (!success && attempts < API_KEYS.length) {
-      try {
-        const ai = new GoogleGenAI({ apiKey: API_KEYS[keyIdx] });
-        
-        const response = await ai.models.generateContent({
-          model: 'gemini-flash-latest',
-          contents: [
-            { role: 'user', parts: [{ text: `System Instruction: ${SYSTEM_INSTRUCTION}\n\nUser Question: ${userMsg}` }] }
-          ],
-          config: {
-            temperature: 0.7,
-            topP: 0.9,
-          }
-        });
-
-        const text = response.text;
-        if (text) {
-          setMessages(prev => [...prev, { role: 'model', text }]);
-          success = true;
-          setActiveKeyIndex(keyIdx); // Simpan index key yang berhasil digunakan
+    try {
+      // Inisialisasi SDK dengan API Key dari environment
+      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      
+      const response = await ai.models.generateContent({
+        model: 'gemini-3-flash-preview',
+        contents: [{ role: 'user', parts: [{ text: userMsg }] }],
+        config: {
+          systemInstruction: SYSTEM_INSTRUCTION,
+          temperature: 0.7,
+          topP: 0.9,
         }
-      } catch (error) {
-        console.warn(`API Key index ${keyIdx} failed, rotating...`, error);
-        keyIdx = (keyIdx + 1) % API_KEYS.length;
-        attempts++;
-      }
-    }
+      });
 
-    if (!success) {
-      setMessages(prev => [...prev, { role: 'model', text: 'Hampura, Mang Asisten sedang sibuk melayani tamu lain. Silakan hubungi WhatsApp kami di 0811-3531-888 untuk bantuan cepat.' }]);
+      const text = response.text;
+      if (text) {
+        setMessages(prev => [...prev, { role: 'model', text }]);
+      } else {
+        throw new Error("Empty response from AI");
+      }
+    } catch (error) {
+      console.error("Chat Error:", error);
+      setMessages(prev => [...prev, { 
+        role: 'model', 
+        text: 'Hampura, Mang Asisten sedang mengalami sedikit kendala teknis. Silakan hubungi WhatsApp kami di 0811-3531-888 untuk bantuan langsung atau reservasi.' 
+      }]);
+    } finally {
+      setIsLoading(false);
     }
-    
-    setIsLoading(false);
   };
 
   return (
@@ -194,7 +174,7 @@ export const ChatAI: React.FC = () => {
                 </button>
               </div>
               <p className="text-center text-[9px] text-mangka-primary/30 mt-3 font-bold uppercase tracking-widest">
-                Didukung oleh Gemini AI • Mang Asisten v2.5
+                Didukung oleh Gemini AI • Mang Asisten v2.6
               </p>
             </div>
           </motion.div>
