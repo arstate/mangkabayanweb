@@ -58,9 +58,9 @@ export const ChatAI: React.FC = () => {
 
       const ai = new GoogleGenAI({ apiKey });
       
-      // Menggunakan model gemini-3-flash-preview untuk performa terbaik
+      // Menggunakan model gemini-2.5-flash sesuai permintaan user
       const response = await ai.models.generateContent({
-        model: 'gemini-3-flash-preview',
+        model: 'gemini-2.5-flash',
         contents: [{ role: 'user', parts: [{ text: userMsg }] }],
         config: {
           systemInstruction: SYSTEM_INSTRUCTION,
@@ -181,7 +181,7 @@ export const ChatAI: React.FC = () => {
                 </button>
               </div>
               <p className="text-center text-[9px] text-mangka-primary/30 mt-3 font-bold uppercase tracking-widest">
-                Protected by Gemini AI • Mang Asisten v3.0
+                Protected by Gemini AI • Mang Asisten v3.1
               </p>
             </div>
           </motion.div>
